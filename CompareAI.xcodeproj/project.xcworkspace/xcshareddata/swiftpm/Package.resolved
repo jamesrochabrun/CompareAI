@@ -1,0 +1,69 @@
+{
+  "originHash" : "ab184c9c05fcdf9e582eeef00ac8447acdf1c9de25071d06f01d542c0f303392",
+  "pins" : [
+    {
+      "identity" : "generative-ai-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/google/generative-ai-swift",
+      "state" : {
+        "branch" : "main",
+        "revision" : "54784005b57c2235a7669e0c12e8dafa68f0ca5f"
+      }
+    },
+    {
+      "identity" : "highlightr",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/raspu/Highlightr",
+      "state" : {
+        "revision" : "fa483d37c692961ecc2391eac568ba3d3935e663",
+        "version" : "2.2.0"
+      }
+    },
+    {
+      "identity" : "networkimage",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/gonzalezreal/NetworkImage",
+      "state" : {
+        "revision" : "7aff8d1b31148d32c5933d75557d42f6323ee3d1",
+        "version" : "6.0.0"
+      }
+    },
+    {
+      "identity" : "polyai",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/jamesrochabrun/PolyAI",
+      "state" : {
+        "branch" : "main",
+        "revision" : "5d10eb371ed4fcea5541e52fafab33b1a5dc6bf2"
+      }
+    },
+    {
+      "identity" : "swift-markdown-ui",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/gonzalezreal/swift-markdown-ui",
+      "state" : {
+        "revision" : "9a8119b37e09a770367eeb26e05267c75d854053",
+        "version" : "2.3.1"
+      }
+    },
+    {
+      "identity" : "swiftanthropic",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/jamesrochabrun/SwiftAnthropic",
+      "state" : {
+        "branch" : "main",
+        "revision" : "7fecba04ab44cf2acacc239f4198facf1b072df3"
+      }
+    },
+    {
+      "identity" : "swiftopenai",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/jamesrochabrun/SwiftOpenAI",
+      "state" : {
+        "branch" : "main",
+        "revision" : "60ec637d19fd84e1a15d243193f96c6e07fc69b8"
+      }
+    }
+  ],
+  "version" : 3
+}
