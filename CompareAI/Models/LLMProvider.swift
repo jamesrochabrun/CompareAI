@@ -9,13 +9,24 @@ import Foundation
 import PolyAI
 import SwiftUI
 
-
 enum Provider: String {
-   case openAI
-   case anthropic
-   case gemini
+   case openAI = "OpenAI"
+   case anthropic = "Anthropic"
+   case gemini = "Gemini"
+   case llama3 = "llama3"
 }
 
+extension Provider {
+   
+   var borderColor: Color {
+      switch self {
+      case .openAI: .green
+      case .anthropic: .brown
+      case .gemini: .purple
+      case .llama3: .blue
+      }
+   }
+}
 
 final class MultipleContent: Identifiable {
    let id = UUID()
@@ -27,7 +38,9 @@ final class MultipleContent: Identifiable {
 }
 
 final class Content: Identifiable {
-   let id = UUID()
+   var id: Provider {
+      provider
+   }
    let provider: Provider
    var response: String = ""
    
@@ -57,13 +70,14 @@ final class LLMProvider {
                let newMultipleContent = MultipleContent(content: [
                    Content(provider: .openAI),
                    Content(provider: .anthropic),
-                   Content(provider: .gemini)
+                   Content(provider: .gemini),
+               Content(provider: .llama3)
                ])
                multipleContent.append(newMultipleContent) // Append once here
 
                // Index of the newly added MultipleContent
                let currentIndex = multipleContent.count - 1
-
+               
                for parameter in parameters {
                   group.addTask {
                      try await self.handleParameter(parameter, at: currentIndex)
@@ -79,46 +93,27 @@ final class LLMProvider {
    
    private func handleParameter(
       _ parameter: LLMParameter, at index: Int)
-   async throws
+      async throws
    {
-   
       guard index < multipleContent.count else { return }
-      var currentContent = multipleContent[index]
+      let currentContent = multipleContent[index]
       
-      switch parameter {
-      case .openAI(let model, let messages, let maxTokens):
-         for try await chunk in self.streamString(parameters: .openAI(model: model, messages: messages, maxTokens: maxTokens)) {
-            if var content = currentContent.content[.openAI] {
-               content.response += chunk
-               multipleContent[index] = currentContent
-            }
-         }
-      case .anthropic(let model, let messages, let maxTokens):
-         for try await chunk in self.streamString(parameters: .anthropic(model: model, messages: messages, maxTokens: maxTokens)) {
-            if var content = currentContent.content[.anthropic] {
-               content.response += chunk
-               multipleContent[index] = currentContent
-            }
-            
-         }
-      case .gemini(let model, let messages, let maxTokens):
-         for try await chunk in self.streamString(parameters: .gemini(model: model, messages: messages, maxTokens: maxTokens)) {
-            if var content = currentContent.content[.gemini] {
-               content.response += chunk
-               multipleContent[index] = currentContent
-            }
+      for try await chunk in self.streamString(parameter: parameter) {
+         if let content = currentContent.content[Provider(rawValue: parameter.llmService)!] {
+            content.response += chunk
+            multipleContent[index] = currentContent
          }
       }
    }
    
    private func streamString(
-      parameters: LLMParameter)
+      parameter: LLMParameter)
    -> AsyncThrowingStream<String, Error>
    {
       AsyncThrowingStream { continuation in
          Task {
             do {
-               let stream = try await service.streamMessage(parameters)
+               let stream = try await service.streamMessage(parameter)
                for try await result in stream {
                   if let content = result.content {
                      continuation.yield(content)
@@ -161,6 +156,7 @@ extension LLMParameter {
       case .openAI: return "OpenAI"
       case .anthropic: return "Anthropic"
       case .gemini: return "Gemini"
+      case .ollama(let model, _, _): return model
       }
    }
 }

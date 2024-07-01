@@ -1,5 +1,4 @@
 {
-  "originHash" : "ab184c9c05fcdf9e582eeef00ac8447acdf1c9de25071d06f01d542c0f303392",
   "pins" : [
     {
       "identity" : "generative-ai-swift",
@@ -34,7 +33,7 @@
       "location" : "https://github.com/jamesrochabrun/PolyAI",
       "state" : {
         "branch" : "main",
-        "revision" : "5d10eb371ed4fcea5541e52fafab33b1a5dc6bf2"
+        "revision" : "5d226c94a7b4a990d797fd9aaa08466d97f0edd5"
       }
     },
     {
@@ -61,9 +60,9 @@
       "location" : "https://github.com/jamesrochabrun/SwiftOpenAI",
       "state" : {
         "branch" : "main",
-        "revision" : "60ec637d19fd84e1a15d243193f96c6e07fc69b8"
+        "revision" : "2544c2f80f807f00297907ab92bfdf0f514b2d48"
       }
     }
   ],
-  "version" : 3
+  "version" : 2
 }
