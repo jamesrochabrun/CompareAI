@@ -26,9 +26,26 @@ extension Provider {
       case .llama3: .blue
       }
    }
+   
+   var model: String {
+      switch self {
+      case .openAI: "GPT4o"
+      case .anthropic: "Claude 3.5 Sonnet"
+      case .gemini: "Gemini 1.5 Pro"
+      case .llama3: "7B"
+      }
+   }
+   
+   var displayName: String {
+      "\(self.rawValue) (\(model))"
+   }
 }
 
-final class MultipleContent: Identifiable {
+final class MultipleContent: Identifiable, Equatable {
+   static func == (lhs: MultipleContent, rhs: MultipleContent) -> Bool {
+      lhs.id == rhs.id
+   }
+   
    let id = UUID()
    var content: [Content]
    
@@ -50,19 +67,35 @@ final class Content: Identifiable {
    }
 }
 
+enum Message: Equatable, Identifiable {
+   case user(prompt: String)
+   case assistant(content: MultipleContent)
+   
+   var id: String {
+      switch self {
+      case .user(let prompt): return "\(UUID().uuidString) \(prompt)"
+      case .assistant(let content): return content.id.uuidString
+      }
+   }
+}
+
 @Observable
 @MainActor
 final class LLMProvider {
    
    let service: PolyAIService
-
-   var multipleContent: [MultipleContent] = []
+   
+   var messages: [Message] = []
    
    init(service: PolyAIService) {
       self.service = service
    }
    
-   func generate(parameters: [LLMParameter]) {
+   func generate(prompt: String, parameters: [LLMParameter]) {
+      
+      // Add message to ui
+      messages.append(.user(prompt: prompt))
+      
       Task {
          do {
             try await withThrowingTaskGroup(of: Void.self) { group in
@@ -73,10 +106,11 @@ final class LLMProvider {
                    Content(provider: .gemini),
                Content(provider: .llama3)
                ])
-               multipleContent.append(newMultipleContent) // Append once here
+               
+               messages.append(.assistant(content: newMultipleContent))
 
                // Index of the newly added MultipleContent
-               let currentIndex = multipleContent.count - 1
+               let currentIndex = messages.count - 1
                
                for parameter in parameters {
                   group.addTask {
@@ -95,14 +129,22 @@ final class LLMProvider {
       _ parameter: LLMParameter, at index: Int)
       async throws
    {
-      guard index < multipleContent.count else { return }
-      let currentContent = multipleContent[index]
+      guard index < messages.count else { return }
+      let currentContent = messages[index]
       
       for try await chunk in self.streamString(parameter: parameter) {
-         if let content = currentContent.content[Provider(rawValue: parameter.llmService)!] {
-            content.response += chunk
-            multipleContent[index] = currentContent
+         switch currentContent {
+         case .assistant(let content):
+            if let content = content.content[Provider(rawValue: parameter.llmService)!] {
+               content.response += chunk
+               messages[index] = currentContent
+            }
+         default:
+            break
          }
+         
+         
+
       }
    }
    

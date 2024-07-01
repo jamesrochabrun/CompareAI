@@ -18,6 +18,7 @@ struct CodeBlockView: View {
       VStack(alignment: .leading, spacing: 24) {
          Text(header)
             .font(.title3)
+            .fontWeight(.semibold)
          Markdown(text)
             .fixedSize(horizontal: false, vertical: true)
             .textSelection(.enabled)
