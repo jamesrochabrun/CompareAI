@@ -9,83 +9,13 @@ import Foundation
 import PolyAI
 import SwiftUI
 
-enum Provider: String {
-   case openAI = "OpenAI"
-   case anthropic = "Anthropic"
-   case gemini = "Gemini"
-   case llama3 = "llama3"
-}
-
-extension Provider {
-   
-   var borderColor: Color {
-      switch self {
-      case .openAI: .green
-      case .anthropic: .brown
-      case .gemini: .purple
-      case .llama3: .blue
-      }
-   }
-   
-   var model: String {
-      switch self {
-      case .openAI: "GPT4o"
-      case .anthropic: "Claude 3.5 Sonnet"
-      case .gemini: "Gemini 1.5 Pro"
-      case .llama3: "7B"
-      }
-   }
-   
-   var displayName: String {
-      "\(self.rawValue) (\(model))"
-   }
-}
-
-final class MultipleContent: Identifiable, Equatable {
-   static func == (lhs: MultipleContent, rhs: MultipleContent) -> Bool {
-      lhs.id == rhs.id
-   }
-   
-   let id = UUID()
-   var content: [Content]
-   
-   init(content: [Content]) {
-      self.content = content
-   }
-}
-
-final class Content: Identifiable {
-   var id: Provider {
-      provider
-   }
-   let provider: Provider
-   var response: String = ""
-   
-   init(provider: Provider, response: String = "") {
-      self.provider = provider
-      self.response = response
-   }
-}
-
-enum Message: Equatable, Identifiable {
-   case user(prompt: String)
-   case assistant(content: MultipleContent)
-   
-   var id: String {
-      switch self {
-      case .user(let prompt): return "\(UUID().uuidString) \(prompt)"
-      case .assistant(let content): return content.id.uuidString
-      }
-   }
-}
-
 @Observable
 @MainActor
 final class LLMProvider {
    
    let service: PolyAIService
    
-   var messages: [Message] = []
+   var messages: [ChatMessageViewModel] = []
    
    init(service: PolyAIService) {
       self.service = service
@@ -100,11 +30,11 @@ final class LLMProvider {
          do {
             try await withThrowingTaskGroup(of: Void.self) { group in
                // Initialize a new MultipleContent for this set of parameters
-               let newMultipleContent = MultipleContent(content: [
-                   Content(provider: .openAI),
-                   Content(provider: .anthropic),
-                   Content(provider: .gemini),
-               Content(provider: .llama3)
+               let newMultipleContent = LLMMultiProvidersContent(content: [
+                   LLMProviderContent(provider: .openAI),
+                   LLMProviderContent(provider: .anthropic),
+                   LLMProviderContent(provider: .gemini),
+               LLMProviderContent(provider: .llama3)
                ])
                
                messages.append(.assistant(content: newMultipleContent))
@@ -130,21 +60,18 @@ final class LLMProvider {
       async throws
    {
       guard index < messages.count else { return }
-      let currentContent = messages[index]
+      let currentMessage = messages[index]
       
       for try await chunk in self.streamString(parameter: parameter) {
-         switch currentContent {
-         case .assistant(let content):
-            if let content = content.content[Provider(rawValue: parameter.llmService)!] {
+         switch currentMessage {
+         case .assistant(let multipleContent):
+            if let content = multipleContent.content[parameter.provider] {
                content.response += chunk
-               messages[index] = currentContent
+               messages[index] = currentMessage
             }
          default:
             break
          }
-         
-         
-
       }
    }
    
@@ -171,9 +98,9 @@ final class LLMProvider {
 }
 
 
-extension [Content] {
+extension [LLMProviderContent] {
    
-   subscript(provider: Provider) -> Content? {
+   subscript(provider: Provider) -> LLMProviderContent? {
        get {
            return self.first(where: { $0.provider == provider })
        }
@@ -188,17 +115,5 @@ extension [Content] {
                self.append(newValue)
            }
        }
-   }
-}
-
-extension LLMParameter {
-   
-   var llmService: String {
-      switch self {
-      case .openAI: return "OpenAI"
-      case .anthropic: return "Anthropic"
-      case .gemini: return "Gemini"
-      case .ollama(let model, _, _): return model
-      }
    }
 }

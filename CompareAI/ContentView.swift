@@ -30,7 +30,6 @@ struct ContentView: View {
    
    @Environment(\.colorScheme) private var colorScheme
    @Environment(\.codeSyntaxHighlighter) private var codeSyntaxHighlighter
-   
 }
 
 #Preview {
