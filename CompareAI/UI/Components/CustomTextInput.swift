@@ -51,6 +51,16 @@ struct CustomTextInput: View {
          .padding(.vertical, 8)
       }
       .padding(.horizontal)
+      .onAppear {
+         NSEvent.addLocalMonitorForEvents(matching: .keyDown) { event in
+            print(event)
+            if let _ = keyActions[CGKeyCode(Int(event.keyCode))] {
+               submitRequest()
+               return nil
+            }
+           return event
+         }
+      }
    }
    
    // MARK: Private
@@ -63,6 +73,9 @@ struct CustomTextInput: View {
    @FocusState private var isTextFieldFocused: Bool
    private let textAreaEdgeInsets = EdgeInsets(top: 10, leading: 15, bottom: 10, trailing: 15)
    private let textAreaCornerRadius = 24.0
+   private let keyActions: [CGKeyCode: String] = [
+      .kVK_Return: "Return"
+   ]
    
    private var chatInputTextEditor: some View {
       ZStack(alignment: .top) {
@@ -72,10 +85,6 @@ struct CustomTextInput: View {
             .font(.title3)
             .frame(maxHeight: 200)
             .fixedSize(horizontal: false, vertical: true)
-         // Resources: https://www.hackingwithswift.com/quick-start/swiftui/how-to-detect-and-respond-to-key-press-events
-            .onKeyPress(keys: [.return]) { press in
-               handleOnReturnPress(press)
-            }
             .onAppear {
                isTextFieldFocused = true
             }

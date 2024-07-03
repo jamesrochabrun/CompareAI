@@ -15,6 +15,7 @@
 		7B492C712C33D20600E52A7B /* LLMMultiProvidersContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B492C702C33D20600E52A7B /* LLMMultiProvidersContent.swift */; };
 		7B492C752C3515DC00E52A7B /* LLMProviderSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B492C742C3515DC00E52A7B /* LLMProviderSelectionView.swift */; };
 		7B492C792C35241300E52A7B /* ConfigurationScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B492C782C35241300E52A7B /* ConfigurationScreen.swift */; };
+		7B492C7C2C35E65C00E52A7B /* KeyboardMapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B492C7B2C35E65C00E52A7B /* KeyboardMapping.swift */; };
 		7B4F85CC2C255C44009B40FD /* CompareAIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4F85CB2C255C44009B40FD /* CompareAIApp.swift */; };
 		7B4F85CE2C255C44009B40FD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4F85CD2C255C44009B40FD /* ContentView.swift */; };
 		7B4F85D02C255C45009B40FD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7B4F85CF2C255C45009B40FD /* Assets.xcassets */; };
@@ -61,6 +62,7 @@
 		7B492C702C33D20600E52A7B /* LLMMultiProvidersContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLMMultiProvidersContent.swift; sourceTree = "<group>"; };
 		7B492C742C3515DC00E52A7B /* LLMProviderSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLMProviderSelectionView.swift; sourceTree = "<group>"; };
 		7B492C782C35241300E52A7B /* ConfigurationScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationScreen.swift; sourceTree = "<group>"; };
+		7B492C7B2C35E65C00E52A7B /* KeyboardMapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardMapping.swift; sourceTree = "<group>"; };
 		7B4F85C82C255C44009B40FD /* CompareAI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CompareAI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B4F85CB2C255C44009B40FD /* CompareAIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompareAIApp.swift; sourceTree = "<group>"; };
 		7B4F85CD2C255C44009B40FD /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -112,6 +114,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7B492C7A2C35E64900E52A7B /* Keyboard */ = {
+			isa = PBXGroup;
+			children = (
+				7B492C7B2C35E65C00E52A7B /* KeyboardMapping.swift */,
+			);
+			path = Keyboard;
+			sourceTree = "<group>";
+		};
 		7B4F85BF2C255C44009B40FD = {
 			isa = PBXGroup;
 			children = (
@@ -186,6 +196,7 @@
 		7B8AABF02C26A97600944FB5 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				7B492C7A2C35E64900E52A7B /* Keyboard */,
 				7B8AAC0B2C27E37000944FB5 /* Components */,
 				7B8AAC082C27E35400944FB5 /* Screens */,
 				7B8AAC012C26ABB500944FB5 /* Design */,
@@ -383,6 +394,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7B8AABF62C26AA3A00944FB5 /* ChatCodeSyntaxHighlighter.swift in Sources */,
+				7B492C7C2C35E65C00E52A7B /* KeyboardMapping.swift in Sources */,
 				7B8AAC052C26ABEF00944FB5 /* Colors.swift in Sources */,
 				7B8AABFE2C26AB7A00944FB5 /* MarkdownUI+Theme.swift in Sources */,
 				7B492C6B2C33CB6600E52A7B /* ChatUserMessageView.swift in Sources */,
