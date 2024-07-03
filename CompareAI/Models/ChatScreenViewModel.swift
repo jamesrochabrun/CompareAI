@@ -9,6 +9,33 @@ import Foundation
 import PolyAI
 import SwiftUI
 
+let mock = """
+But we’re not quite done yet, because iOS 16 also gives us another interesting new layout tool that could potentially be used to implement our DynamicStack — which is a new view type called ViewThatFits. Like its name implies, that new container will pick the view that best fits within the current context, based on a list of candidates that we pass when initializing it.
+
+In our case, that means that we could pass it both an HStack and a VStack, and it’ll automatically switch between them on our behalf:
+
+```swift
+struct DynamicStack<Content: View>: View {
+    ...
+    var body: some View {
+        ViewThatFits {
+            HStack(
+                alignment: verticalAlignment,
+                spacing: spacing,
+                content: content
+            )
+
+            VStack(
+                alignment: horizontalAlignment,
+                spacing: spacing,
+                content: content
+            )
+        }
+    }
+}
+```
+"""
+
 @Observable
 @MainActor
 final class ChatScreenViewModel {
@@ -19,7 +46,12 @@ final class ChatScreenViewModel {
    
    var service: PolyAIService
    
-   var messages: [ChatMessageViewModel] = []
+   var messages: [ChatMessageViewModel] = [.user(prompt: "hello"), .assistant(content: .init(content: [
+      .init(provider: .anthropic, response: mock),
+      .init(provider: .openAI, response: mock),
+      .init(provider: .llama3, response: mock),
+      .init(provider: .gemini, response: mock)
+   ]))]
    
    var availableProviders: [LLMProvider] = []
       

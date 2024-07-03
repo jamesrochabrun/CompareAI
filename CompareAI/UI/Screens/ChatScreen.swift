@@ -46,24 +46,40 @@ struct ChatScreen: View {
       }
       .frame(maxWidth: .infinity, maxHeight: .infinity)
    }
-   
+   @Environment(\.horizontalSizeClass) private var sizeClass
+
    private var chat: some View {
-      ScrollView {
-         ForEach(viewModel.messages) { message in
-            switch message {
-            case .user(let prompt):
-               ChatUserMessageView(text: prompt)
-                  .frame(maxWidth: .infinity, alignment: .trailing)
-                  .padding()
-            case .assistant(let multipleContent):
-               HStack(alignment: .top) {
-                  ForEach(multipleContent.content) { content in
-                     ChatAssistantMessageView(
-                        providerName: content.provider.displayName,
-                        response: content.response)
+      GeometryReader { proxy in
+         ScrollView {
+            ForEach(viewModel.messages) { message in
+               switch message {
+               case .user(let prompt):
+                  ChatUserMessageView(text: prompt)
+                     .frame(maxWidth: .infinity, alignment: .trailing)
+                     .padding()
+               case .assistant(let multipleContent):
+                  if proxy.size.width > 1000 {
+                     HStack(alignment: .top) {
+                        ForEach(multipleContent.content) { content in
+                           ChatAssistantMessageView(
+                              providerName: content.provider.displayName,
+                              response: content.response,
+                              layout: .horizontal)
+                        }
+                     }
+                     .padding()
+                  } else {
+                     VStack(alignment: .center) {
+                        ForEach(multipleContent.content) { content in
+                           ChatAssistantMessageView(
+                              providerName: content.provider.displayName,
+                              response: content.response,
+                              layout: .vertical)
+                        }
+                     }
+                     .padding()
                   }
                }
-               .padding()
             }
          }
       }

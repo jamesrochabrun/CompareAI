@@ -14,18 +14,16 @@ struct ChatAssistantMessageView: View {
    
    let providerName: String
    let response: String
+   let layout: ParentLayout
+   
+   enum ParentLayout {
+      case horizontal
+      case vertical
+   }
    
    var body: some View {
       VStack(alignment: .leading, spacing: 24) {
-         Text(providerName)
-            .shadow(color: .gray.opacity(0.5), radius: 5, x: 0, y: 2)
-            .font(.title3)
-            .fontWeight(.semibold)
-            .clipped()
-            .frame(maxWidth: .infinity)
-            .frame(height: 40)
-            .background(.ultraThickMaterial)
-            .textSelection(.enabled)
+         header
          Markdown(response)
             .fixedSize(horizontal: false, vertical: true)
             .textSelection(.enabled)
@@ -35,6 +33,7 @@ struct ChatAssistantMessageView: View {
             .padding(.bottom)
       }
       .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+      .frame(maxHeight: maxHeight, alignment: .top)
       .background(.ultraThinMaterial)
       .cornerRadius(10)
       .shadow(color: .gray.opacity(0.5), radius: 5, x: 0, y: 2)
@@ -44,6 +43,40 @@ struct ChatAssistantMessageView: View {
       )
    }
    
+   private var header: some View {
+      HStack {
+         Text(providerName)
+            .shadow(color: .gray.opacity(0.5), radius: 5, x: 0, y: 2)
+            .fontWeight(.semibold)
+            .clipped()
+            .frame(maxWidth: .infinity)
+            .frame(height: 40)
+            .textSelection(.enabled)
+         if layout == .vertical {
+            Button {
+               withAnimation {
+                  isExpanded.toggle()
+               }
+            } label: {
+               Image(systemName: isExpanded ? "arrow.up.right.and.arrow.down.left.circle" : "arrow.up.left.and.arrow.down.right.circle")
+            }
+            .buttonStyle(.plain)
+            .contentTransition(.symbolEffect(.replace))
+            .padding(.trailing)
+         }
+      }
+      .font(.title3)
+      .background(.ultraThickMaterial)
+   }
+   
+   private var maxHeight: CGFloat? {
+      switch layout {
+      case .horizontal: return nil
+      case .vertical: return isExpanded ? nil : 200
+      }
+   }
+   
    @Environment(\.colorScheme) private var colorScheme
    @Environment(\.codeSyntaxHighlighter) private var codeSyntaxHighlighter
+   @State private var isExpanded: Bool = false
 }
