@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import PolyAI
 import SwiftUI
 
 @MainActor
@@ -14,8 +13,8 @@ struct ChatScreen: View {
    
    // MARK: Initializer
 
-   init(service: PolyAIService) {
-      viewModel = .init(service: service)
+   init(viewModel: ChatScreenViewModel) {
+      self.viewModel = viewModel
    }
    
    var body: some View {
@@ -76,7 +75,7 @@ struct ChatScreen: View {
          isImageInputEnabled: false,
          isStreamingResponse: false,
          isSendButtonDisabled: false,
-         availableProviders: LLMProvider.allCases,
+         availableProviders: viewModel.availableProviders,
          didSubmit: { state in
             switch state {
             case .hold:

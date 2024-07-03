@@ -9,21 +9,31 @@ import SwiftUI
 import PolyAI
 import SwiftOpenAI
 
+@MainActor
 struct ContentView: View {
    
-   let service = PolyAIServiceFactory.serviceWith([
-      .openAI(.api(key: "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")),
-      .anthropic(apiKey: "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"),
-      .gemini(apiKey: "AIzaSyCbaQcnih3bIDNQ-RuSO3mC79t1TDQFYXk"),
-      .ollama(url: "http://localhost:11434")
-   ])
-      
+   @State private var llmConfigurations: [LLMConfiguration] = []
+   @State private var availableProviders: [LLMProvider] = []
+
+   @State private var chatScreenViewModel: ChatScreenViewModel = .init(service: PolyAIServiceFactory.serviceWith([]))
+   
    var body: some View {
-      ChatScreen(service: service)
-         .backgroundGaussianBlur(type: .behindWindow)
-         .onChange(of: colorScheme, initial: true) { _, newValue in
-            codeSyntaxHighlighter.updateTheme(colorScheme: newValue)
-         }
+      NavigationSplitView {
+         ConfigurationScreen(
+            llmConfigurations: $llmConfigurations,
+            availableProviders: $availableProviders)
+      } detail: {
+         ChatScreen(viewModel: chatScreenViewModel)
+            .backgroundGaussianBlur(type: .behindWindow)
+      }
+      .onChange(of: colorScheme, initial: true) { _, newValue in
+         codeSyntaxHighlighter.updateTheme(colorScheme: newValue)
+      }.onChange(of: llmConfigurations) { _, newValue in
+         chatScreenViewModel.udpateConfigurations(newValue)
+      }
+      .onChange(of: availableProviders) { _, newValue in
+         chatScreenViewModel.availableProviders = newValue
+      }
    }
    
    // MARK: Private

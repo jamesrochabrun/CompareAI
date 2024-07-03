@@ -67,6 +67,15 @@ extension LLMProvider: Identifiable, CaseIterable {
       "\(self.rawValue) (\(model))"
    }
    
+   var apiKeyInputText: String {
+      switch self {
+      case .llama3:
+         "Enter Ollama local Host URL"
+      default:
+         "Enter \(rawValue) API Key"
+      }
+   }
+   
    func parameter(_ prompt: String, maxTokens: Int) -> LLMParameter {
       let message = LLMMessage(role: .user, content: prompt)
       switch self {
@@ -74,6 +83,15 @@ extension LLMProvider: Identifiable, CaseIterable {
       case .anthropic: return .anthropic(model: .claude35Sonnet, messages: [message], maxTokens: maxTokens)
       case .gemini: return .gemini(model: "gemini-1.5-pro-001", messages: [message], maxTokens: maxTokens)
       case .llama3: return .ollama(model: "llama3", messages: [message], maxTokens: maxTokens)
+      }
+   }
+   
+   func configuration(_ value: String) -> LLMConfiguration {
+      switch self {
+      case .openAI: return .openAI(.api(key: value))
+      case .anthropic: return .anthropic(apiKey: value)
+      case .gemini: return .gemini(apiKey: value)
+      case .llama3: return .ollama(url: value)
       }
    }
 }

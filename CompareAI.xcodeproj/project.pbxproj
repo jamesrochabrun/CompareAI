@@ -14,6 +14,7 @@
 		7B492C6F2C33D16300E52A7B /* LLMProviderContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B492C6E2C33D16300E52A7B /* LLMProviderContent.swift */; };
 		7B492C712C33D20600E52A7B /* LLMMultiProvidersContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B492C702C33D20600E52A7B /* LLMMultiProvidersContent.swift */; };
 		7B492C752C3515DC00E52A7B /* LLMProviderSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B492C742C3515DC00E52A7B /* LLMProviderSelectionView.swift */; };
+		7B492C792C35241300E52A7B /* ConfigurationScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B492C782C35241300E52A7B /* ConfigurationScreen.swift */; };
 		7B4F85CC2C255C44009B40FD /* CompareAIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4F85CB2C255C44009B40FD /* CompareAIApp.swift */; };
 		7B4F85CE2C255C44009B40FD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4F85CD2C255C44009B40FD /* ContentView.swift */; };
 		7B4F85D02C255C45009B40FD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7B4F85CF2C255C45009B40FD /* Assets.xcassets */; };
@@ -59,6 +60,7 @@
 		7B492C6E2C33D16300E52A7B /* LLMProviderContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLMProviderContent.swift; sourceTree = "<group>"; };
 		7B492C702C33D20600E52A7B /* LLMMultiProvidersContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLMMultiProvidersContent.swift; sourceTree = "<group>"; };
 		7B492C742C3515DC00E52A7B /* LLMProviderSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLMProviderSelectionView.swift; sourceTree = "<group>"; };
+		7B492C782C35241300E52A7B /* ConfigurationScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationScreen.swift; sourceTree = "<group>"; };
 		7B4F85C82C255C44009B40FD /* CompareAI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CompareAI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B4F85CB2C255C44009B40FD /* CompareAIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompareAIApp.swift; sourceTree = "<group>"; };
 		7B4F85CD2C255C44009B40FD /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -222,6 +224,7 @@
 			isa = PBXGroup;
 			children = (
 				7B8AAC092C27E35E00944FB5 /* ChatScreen.swift */,
+				7B492C782C35241300E52A7B /* ConfigurationScreen.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -389,6 +392,7 @@
 				7B8AAC032C26ABBD00944FB5 /* Sizes.swift in Sources */,
 				7B8AAC172C28020E00944FB5 /* ChatScrollView.swift in Sources */,
 				7B8AAC072C26AE8500944FB5 /* CustomTextInput.swift in Sources */,
+				7B492C792C35241300E52A7B /* ConfigurationScreen.swift in Sources */,
 				7B492C6D2C33D11300E52A7B /* ChatMessageViewModel.swift in Sources */,
 				7B4F85CE2C255C44009B40FD /* ContentView.swift in Sources */,
 				7B8AAC0A2C27E35E00944FB5 /* ChatScreen.swift in Sources */,

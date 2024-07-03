@@ -43,7 +43,9 @@ struct CustomTextInput: View {
                chatInputTextEditor
                   .padding(.vertical, 8)
                actionButton
-               providerSelectorButton
+               if !availableProviders.isEmpty {
+                  providerSelectorButton
+               }
             }
          }
          .padding(.vertical, 8)
@@ -138,7 +140,7 @@ struct CustomTextInput: View {
          didSubmit(.hold)
          return
       }
-      guard prompt.isEmpty, selectedProviders.isEmpty else {
+      guard !prompt.isEmpty, !selectedProviders.isEmpty else {
          // TODO: Show an alert to say hey select a provider and try again.
          return
       }

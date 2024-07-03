@@ -13,17 +13,25 @@ import SwiftUI
 @MainActor
 final class ChatScreenViewModel {
    
-   let service: PolyAIService
-   
-   var messages: [ChatMessageViewModel] = []
-   
    init(service: PolyAIService) {
       self.service = service
    }
    
-   func generate(prompt: String, parameters: [LLMParameter]) {
+   var service: PolyAIService
+   
+   var messages: [ChatMessageViewModel] = []
+   
+   var availableProviders: [LLMProvider] = []
       
-      // Add message to ui
+   func udpateConfigurations(_ configurations: [LLMConfiguration]) {
+      service = PolyAIServiceFactory.serviceWith(configurations)
+   }
+   
+   func generate(
+      prompt: String,
+      parameters: [LLMParameter])
+   {
+      // Add users message to ui
       messages.append(.user(prompt: prompt))
       
       Task {
