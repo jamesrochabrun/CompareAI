@@ -14,6 +14,7 @@ struct ChatUserMessageView: View {
    
    var body: some View {
       Text(text)
+         .textSelection(.enabled)
          .padding(.horizontal)
          .padding(.vertical, 8)
          .background(Color.black.opacity(0.2))

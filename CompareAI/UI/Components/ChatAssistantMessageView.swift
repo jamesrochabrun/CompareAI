@@ -25,6 +25,7 @@ struct ChatAssistantMessageView: View {
             .frame(maxWidth: .infinity)
             .frame(height: 40)
             .background(.ultraThickMaterial)
+            .textSelection(.enabled)
          Markdown(response)
             .fixedSize(horizontal: false, vertical: true)
             .textSelection(.enabled)

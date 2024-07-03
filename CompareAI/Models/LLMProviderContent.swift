@@ -13,11 +13,11 @@ import SwiftUI
 
 final class LLMProviderContent {
    
-   let provider: Provider
+   let provider: LLMProvider
    var response: String = ""
    
    init(
-      provider: Provider,
+      provider: LLMProvider,
       response: String = "")
    {
       self.provider = provider
@@ -27,19 +27,23 @@ final class LLMProviderContent {
 
 extension LLMProviderContent: Identifiable {
    
-   var id: Provider { provider }
+   var id: LLMProvider { provider }
 }
 
 // MARK: Provider
 
-enum Provider: String {
+enum LLMProvider: String {
    case openAI = "OpenAI"
    case anthropic = "Anthropic"
    case gemini = "Gemini"
    case llama3 = "llama3"
 }
 
-extension Provider {
+extension LLMProvider: Identifiable, CaseIterable {
+   
+   var id: Self {
+      self
+   }
    
    var borderColor: Color {
       switch self {
@@ -62,13 +66,23 @@ extension Provider {
    var displayName: String {
       "\(self.rawValue) (\(model))"
    }
+   
+   func parameter(_ prompt: String, maxTokens: Int) -> LLMParameter {
+      let message = LLMMessage(role: .user, content: prompt)
+      switch self {
+      case .openAI: return .openAI(model: .gpt4o, messages: [message], maxTokens: maxTokens)
+      case .anthropic: return .anthropic(model: .claude35Sonnet, messages: [message], maxTokens: maxTokens)
+      case .gemini: return .gemini(model: "gemini-1.5-pro-001", messages: [message], maxTokens: maxTokens)
+      case .llama3: return .ollama(model: "llama3", messages: [message], maxTokens: maxTokens)
+      }
+   }
 }
 
 // MARK: LLMParameter
 
 extension LLMParameter {
 
-   var provider: Provider {
+   var provider: LLMProvider {
       switch self {
       case .openAI: return .openAI
       case .anthropic: return .anthropic

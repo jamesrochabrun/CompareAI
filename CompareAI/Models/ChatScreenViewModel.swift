@@ -1,5 +1,5 @@
 //
-//  LLMProvider.swift
+//  ChatScreenViewModel.swift
 //  CompareAI
 //
 //  Created by James Rochabrun on 6/21/24.
@@ -11,7 +11,7 @@ import SwiftUI
 
 @Observable
 @MainActor
-final class LLMProvider {
+final class ChatScreenViewModel {
    
    let service: PolyAIService
    
@@ -30,16 +30,26 @@ final class LLMProvider {
          do {
             try await withThrowingTaskGroup(of: Void.self) { group in
                // Initialize a new MultipleContent for this set of parameters
-               let newMultipleContent = LLMMultiProvidersContent(content: [
-                   LLMProviderContent(provider: .openAI),
-                   LLMProviderContent(provider: .anthropic),
-                   LLMProviderContent(provider: .gemini),
-               LLMProviderContent(provider: .llama3)
-               ])
+               
+               var content: [LLMProviderContent] = []
+               for parameter in parameters {
+                  switch parameter {
+                  case .openAI:
+                     content.append(.init(provider: .openAI))
+                  case .anthropic:
+                     content.append(.init(provider: .anthropic))
+                  case .gemini:
+                     content.append(.init(provider: .gemini))
+                  case .ollama:
+                     content.append(.init(provider: .llama3))
+                  }
+               }
+                              
+               let newMultipleContent = LLMMultiProvidersContent(content: content)
                
                messages.append(.assistant(content: newMultipleContent))
 
-               // Index of the newly added MultipleContent
+               // Index of the newly added assistant MultipleContent
                let currentIndex = messages.count - 1
                
                for parameter in parameters {
@@ -100,7 +110,7 @@ final class LLMProvider {
 
 extension [LLMProviderContent] {
    
-   subscript(provider: Provider) -> LLMProviderContent? {
+   subscript(provider: LLMProvider) -> LLMProviderContent? {
        get {
            return self.first(where: { $0.provider == provider })
        }
