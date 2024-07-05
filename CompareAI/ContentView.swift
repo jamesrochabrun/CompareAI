@@ -14,7 +14,6 @@ struct ContentView: View {
    
    @State private var llmConfigurations: [LLMConfiguration] = []
    @State private var availableProviders: [LLMProvider] = []
-
    @State private var chatScreenViewModel: ChatScreenViewModel = .init(service: PolyAIServiceFactory.serviceWith([]))
    
    var body: some View {
@@ -28,7 +27,8 @@ struct ContentView: View {
       }
       .onChange(of: colorScheme, initial: true) { _, newValue in
          codeSyntaxHighlighter.updateTheme(colorScheme: newValue)
-      }.onChange(of: llmConfigurations) { _, newValue in
+      }
+      .onChange(of: llmConfigurations) { _, newValue in
          chatScreenViewModel.udpateConfigurations(newValue)
       }
       .onChange(of: availableProviders) { _, newValue in

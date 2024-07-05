@@ -50,7 +50,7 @@ struct LLMConfigurationView: View {
                addConfig(provider.configuration(apiKey), provider)
                configurationAdded = true
             } label: {
-               Image(systemName: "plus")
+               Image(systemName: configurationAdded ? "minus" : "plus")
             }
             .buttonStyle(.plain)
             .disabled(apiKey.isEmpty)

@@ -6,13 +6,14 @@
 //
 
 import Foundation
+import PolyAI
 import SwiftUI
 
 @MainActor
 struct ChatScreen: View {
    
    // MARK: Initializer
-
+   
    init(viewModel: ChatScreenViewModel) {
       self.viewModel = viewModel
    }
@@ -36,7 +37,7 @@ struct ChatScreen: View {
    private var emptyView: some View {
       VStack {
          HStack {
-            Image(systemName: "lessthan")
+            Image(systemName: "greaterthan")
             Text("CompareAI")
          }
          .font(.largeTitle)
@@ -44,40 +45,42 @@ struct ChatScreen: View {
          .fontDesign(.monospaced)
          textArea
       }
+      .padding(.horizontal)
       .frame(maxWidth: .infinity, maxHeight: .infinity)
    }
    @Environment(\.horizontalSizeClass) private var sizeClass
-
+   
    private var chat: some View {
       GeometryReader { proxy in
          ScrollView {
             ForEach(viewModel.messages) { message in
-               switch message {
+               switch message.message {
+               case .analyze(let content):
+                  ChatSingleContentView(
+                     providerContent: content,
+                     style: .analyzing,
+                     isScrollEnabled: false)
                case .user(let prompt):
                   ChatUserMessageView(text: prompt)
-                     .frame(maxWidth: .infinity, alignment: .trailing)
-                     .padding()
                case .assistant(let multipleContent):
-                  if proxy.size.width > 1000 {
-                     HStack(alignment: .top) {
-                        ForEach(multipleContent.content) { content in
-                           ChatAssistantMessageView(
-                              providerName: content.provider.displayName,
-                              response: content.response,
-                              layout: .horizontal)
-                        }
-                     }
-                     .padding()
+                  if let firstContent = multipleContent.content.first, multipleContent.content.count == 1 {
+                     ChatSingleContentView(
+                        providerContent: firstContent,
+                        style: .defaultStyle,
+                        isScrollEnabled: false)
                   } else {
-                     VStack(alignment: .center) {
-                        ForEach(multipleContent.content) { content in
-                           ChatAssistantMessageView(
-                              providerName: content.provider.displayName,
-                              response: content.response,
-                              layout: .vertical)
-                        }
-                     }
-                     .padding()
+                     // horizontal: proxy.size.width > 1000
+                     ChatMultipleContentView(
+                        multipleContent: multipleContent,
+                        layout: proxy.size.width > 1000 ? .horizontal : .vertical,
+                        isChildrenScrollingEnabled: true,
+                        analyze: { multipleContent in
+                           Task {
+                              try await viewModel.analyze(multipleContent: multipleContent, with: .anthropic)
+                           }
+                        })
+                     // We only want to apply a max width for horizontal layout.
+                     .frame(maxHeight: proxy.size.width > 1000 ? 500 : nil)
                   }
                }
             }
@@ -97,9 +100,7 @@ struct ChatScreen: View {
             case .hold:
                break
             case .send(let prompt, _, let selectedProviders):
-               viewModel.generate(
-                  prompt: prompt,
-                  parameters: selectedProviders.map { $0.parameter(prompt, maxTokens: 1000) })
+               viewModel.sendUserPrompt(prompt, selectedProviders: selectedProviders)
             }
          },
          didTapStop: {})
@@ -108,4 +109,50 @@ struct ChatScreen: View {
    
    @State private var prompt: String = ""
    @Environment(\.colorScheme) private var colorScheme
+}
+
+#Preview("Empty") {
+   ChatScreen(viewModel: .init(service: PolyAIServiceFactory.serviceWith([])))
+}
+
+#Preview("Mock Single Content") {
+   let viewModel = ChatScreenViewModel(service: PolyAIServiceFactory.serviceWith([]))
+   viewModel.messages = [
+      .init(message: .user(prompt: "What is this?")),
+      .init(message: .assistant(content: .init(content: [
+         LLMProviderContent(provider: .openAI, response: response)
+      ]))),
+      .init(message: .analyze(response: LLMProviderContent(provider: .openAI, response: response)))
+   ]
+   return ChatScreen(viewModel: viewModel).frame(height: 800)
+}
+
+#Preview("Mock Multiple Content wide") {
+   let viewModel = ChatScreenViewModel(service: PolyAIServiceFactory.serviceWith([]))
+   viewModel.messages = [
+      .init(message: .user(prompt: "What is this?")),
+      .init(message: .assistant(content: .init(content: [
+         LLMProviderContent(provider: .openAI, response: response),
+         LLMProviderContent(provider: .anthropic, response: response),
+         LLMProviderContent(provider: .llama3, response: response),
+         LLMProviderContent(provider: .gemini, response: response)
+      ]))),
+      .init(message: .analyze(response: LLMProviderContent(provider: .openAI, response: response)))
+   ]
+   return ChatScreen(viewModel: viewModel).frame(width: 1200, height: 800)
+}
+
+#Preview("Mock Multiple Content vertical") {
+   let viewModel = ChatScreenViewModel(service: PolyAIServiceFactory.serviceWith([]))
+   viewModel.messages = [
+      .init(message: .user(prompt: "What is this?")),
+      .init(message: .assistant(content: .init(content: [
+         LLMProviderContent(provider: .openAI, response: response),
+         LLMProviderContent(provider: .anthropic, response: response),
+         LLMProviderContent(provider: .llama3, response: response),
+         LLMProviderContent(provider: .gemini, response: response)
+      ]))),
+      .init(message: .analyze(response: LLMProviderContent(provider: .openAI, response: response)))
+   ]
+   return ChatScreen(viewModel: viewModel).frame(width: 800, height: 800)
 }

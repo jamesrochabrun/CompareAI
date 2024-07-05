@@ -9,33 +9,6 @@ import Foundation
 import PolyAI
 import SwiftUI
 
-let mock = """
-But we’re not quite done yet, because iOS 16 also gives us another interesting new layout tool that could potentially be used to implement our DynamicStack — which is a new view type called ViewThatFits. Like its name implies, that new container will pick the view that best fits within the current context, based on a list of candidates that we pass when initializing it.
-
-In our case, that means that we could pass it both an HStack and a VStack, and it’ll automatically switch between them on our behalf:
-
-```swift
-struct DynamicStack<Content: View>: View {
-    ...
-    var body: some View {
-        ViewThatFits {
-            HStack(
-                alignment: verticalAlignment,
-                spacing: spacing,
-                content: content
-            )
-
-            VStack(
-                alignment: horizontalAlignment,
-                spacing: spacing,
-                content: content
-            )
-        }
-    }
-}
-```
-"""
-
 @Observable
 @MainActor
 final class ChatScreenViewModel {
@@ -43,15 +16,8 @@ final class ChatScreenViewModel {
    init(service: PolyAIService) {
       self.service = service
    }
-   
-   var service: PolyAIService
-   
-   var messages: [ChatMessageViewModel] = [.user(prompt: "hello"), .assistant(content: .init(content: [
-      .init(provider: .anthropic, response: mock),
-      .init(provider: .openAI, response: mock),
-      .init(provider: .llama3, response: mock),
-      .init(provider: .gemini, response: mock)
-   ]))]
+      
+   var messages: [ChatMessageViewModel] = []
    
    var availableProviders: [LLMProvider] = []
       
@@ -59,12 +25,28 @@ final class ChatScreenViewModel {
       service = PolyAIServiceFactory.serviceWith(configurations)
    }
    
-   func generate(
-      prompt: String,
-      parameters: [LLMParameter])
+   func analyze(
+      multipleContent: LLMMultiProvidersContent,
+      with provider: LLMProvider) async throws
    {
+      // Get last user's query.
+      let lastUserQuery = lastMessageOf(type: .user)?.message.userPrompt ?? ""
+      let systemMessage = LLMMessage(role: .system, content: Prompts.analyzingSystemPrompt)
+      let userPrompt = Prompts.analyzeUsersPrompt(lastUserQuery, content: multipleContent.formattedContent)
+      Prompts.printHelper(context: "User Prompt to analyze", content: userPrompt)
+      let usersMessage = LLMMessage(role: .user, content: userPrompt)
+      let messages = [systemMessage, usersMessage]
+      let parameter = provider.parameter(messages, maxTokens: 1000)
+      try await analyze(with: parameter)
+   }
+   
+   func sendUserPrompt(
+      _ prompt: String,
+      selectedProviders: [LLMProvider])
+   {
+      let parameters = selectedProviders.map { $0.parameter([.init(role: .user, content: prompt)], maxTokens: 1000) }
       // Add users message to ui
-      messages.append(.user(prompt: prompt))
+      messages.append(ChatMessageViewModel(message: .user(prompt: prompt)))
       
       Task {
          do {
@@ -84,11 +66,11 @@ final class ChatScreenViewModel {
                      content.append(.init(provider: .llama3))
                   }
                }
-                              
+               
                let newMultipleContent = LLMMultiProvidersContent(content: content)
                
-               messages.append(.assistant(content: newMultipleContent))
-
+               messages.append(ChatMessageViewModel(message: .assistant(content: newMultipleContent)))
+               
                // Index of the newly added assistant MultipleContent
                let currentIndex = messages.count - 1
                
@@ -105,20 +87,25 @@ final class ChatScreenViewModel {
       }
    }
    
+   // MARK: Private
+   
    private func handleParameter(
       _ parameter: LLMParameter, at index: Int)
-      async throws
+   async throws
    {
       guard index < messages.count else { return }
       let currentMessage = messages[index]
-      
       for try await chunk in self.streamString(parameter: parameter) {
-         switch currentMessage {
+         switch currentMessage.message {
          case .assistant(let multipleContent):
             if let content = multipleContent.content[parameter.provider] {
                content.response += chunk
+               Prompts.printHelper(context: "Gen AI: \(parameter.provider)", content: content.response)
                messages[index] = currentMessage
             }
+         case .analyze(let content):
+            content.response += chunk
+            messages[index] = currentMessage
          default:
             break
          }
@@ -145,25 +132,44 @@ final class ChatScreenViewModel {
          }
       }
    }
+   
+   private func analyze(
+      with parameter: LLMParameter)
+      async throws
+   {
+      messages.append(ChatMessageViewModel(message: .analyze(response: .init(provider: parameter.provider, response: "Analyzing...."))))
+      let currentIndex = messages.count - 1
+      try await handleParameter(parameter, at: currentIndex)
+   }
+   
+   private func lastMessageOf(
+      type: ChatMessageViewModel.Message.MessageType)
+      -> ChatMessageViewModel?
+   {
+      messages.last { message in
+         message.message.type == type
+      }
+   }
+   
+   private var service: PolyAIService
 }
-
 
 extension [LLMProviderContent] {
    
    subscript(provider: LLMProvider) -> LLMProviderContent? {
-       get {
-           return self.first(where: { $0.provider == provider })
-       }
-       set {
-           if let index = self.firstIndex(where: { $0.provider == provider }) {
-               if let newValue = newValue {
-                   self[index] = newValue
-               } else {
-                   self.remove(at: index)
-               }
-           } else if let newValue = newValue {
-               self.append(newValue)
-           }
-       }
+      get {
+         return self.first(where: { $0.provider == provider })
+      }
+      set {
+         if let index = self.firstIndex(where: { $0.provider == provider }) {
+            if let newValue = newValue {
+               self[index] = newValue
+            } else {
+               self.remove(at: index)
+            }
+         } else if let newValue = newValue {
+            self.append(newValue)
+         }
+      }
    }
 }

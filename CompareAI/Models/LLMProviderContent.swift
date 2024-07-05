@@ -11,8 +11,12 @@ import SwiftUI
 
 // MARK: LLMProviderContent
 
-final class LLMProviderContent {
+@Observable
+final class LLMProviderContent: Equatable {
    
+   static func == (lhs: LLMProviderContent, rhs: LLMProviderContent) -> Bool {
+      lhs.id == rhs.id
+   }
    let provider: LLMProvider
    var response: String = ""
    
@@ -76,22 +80,25 @@ extension LLMProvider: Identifiable, CaseIterable {
       }
    }
    
-   func parameter(_ prompt: String, maxTokens: Int) -> LLMParameter {
-      let message = LLMMessage(role: .user, content: prompt)
+   func parameter(
+      _ messages: [LLMMessage],
+      maxTokens: Int)
+   -> LLMParameter
+   {
       switch self {
-      case .openAI: return .openAI(model: .gpt4o, messages: [message], maxTokens: maxTokens)
-      case .anthropic: return .anthropic(model: .claude35Sonnet, messages: [message], maxTokens: maxTokens)
-      case .gemini: return .gemini(model: "gemini-1.5-pro-001", messages: [message], maxTokens: maxTokens)
-      case .llama3: return .ollama(model: "llama3", messages: [message], maxTokens: maxTokens)
+      case .openAI: return .openAI(model: .gpt4o, messages: messages, maxTokens: maxTokens)
+      case .anthropic: return .anthropic(model: .claude35Sonnet, messages: messages, maxTokens: maxTokens)
+      case .gemini: return .gemini(model: "gemini-1.5-pro-001", messages: messages, maxTokens: maxTokens)
+      case .llama3: return .ollama(model: "llama3", messages: messages, maxTokens: maxTokens)
       }
    }
    
    func configuration(_ value: String) -> LLMConfiguration {
       switch self {
-      case .openAI: return .openAI(.api(key: value))
-      case .anthropic: return .anthropic(apiKey: value)
-      case .gemini: return .gemini(apiKey: value)
-      case .llama3: return .ollama(url: value)
+      case .openAI: return .openAI(.api(key: ""))
+      case .anthropic: return .anthropic(apiKey: "")
+      case .gemini: return .gemini(apiKey: "")
+      case .llama3: return .ollama(url: "http://localhost:11434")
       }
    }
 }
@@ -99,7 +106,7 @@ extension LLMProvider: Identifiable, CaseIterable {
 // MARK: LLMParameter
 
 extension LLMParameter {
-
+   
    var provider: LLMProvider {
       switch self {
       case .openAI: return .openAI

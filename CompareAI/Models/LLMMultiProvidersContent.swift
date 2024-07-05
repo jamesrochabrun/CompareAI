@@ -18,6 +18,19 @@ struct LLMMultiProvidersContent: Identifiable {
    init(content: [LLMProviderContent]) {
       self.content = content
    }
+   
+   var formattedContent: String {
+      var text = ""
+      for providerContent in content {
+         text += """
+         
+         Provider: \(providerContent.provider.displayName)
+         Response: \(providerContent.response)
+         
+         """
+      }
+      return text
+   }
 }
 
 // MARK: LLMMultiProvidersContent+Equatable

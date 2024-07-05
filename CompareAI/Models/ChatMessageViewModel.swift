@@ -7,18 +7,46 @@
 
 import Foundation
 
-enum ChatMessageViewModel: Equatable {
+@Observable
+final class ChatMessageViewModel: Equatable, Identifiable {
    
-   case user(prompt: String)
-   case assistant(content: LLMMultiProvidersContent)
-}
-
-extension ChatMessageViewModel: Identifiable {
+   let id = UUID()
    
-   var id: String {
-      switch self {
-      case .user(let prompt): return "\(UUID().uuidString) \(prompt)"
-      case .assistant(let content): return content.id.uuidString
+   static func == (lhs: ChatMessageViewModel, rhs: ChatMessageViewModel) -> Bool {
+      lhs.message == rhs.message
+   }
+   
+   init(message: Message) {
+      self.message = message
+   }
+   
+   var message: Message
+   
+   enum Message: Equatable {
+      
+      case user(prompt: String)
+      case assistant(content: LLMMultiProvidersContent)
+      case analyze(response: LLMProviderContent)
+      
+      enum MessageType {
+         case user
+         case assistant
+         case analyze
+      }
+      
+      var type: MessageType {
+         switch self {
+         case .user: return .user
+         case .assistant: return .assistant
+         case .analyze: return .analyze
+         }
+      }
+      
+      var userPrompt: String? {
+         switch self {
+         case .user(let prompt): return prompt
+         default: return nil
+         }
       }
    }
 }

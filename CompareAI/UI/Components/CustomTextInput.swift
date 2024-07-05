@@ -53,12 +53,11 @@ struct CustomTextInput: View {
       .padding(.horizontal)
       .onAppear {
          NSEvent.addLocalMonitorForEvents(matching: .keyDown) { event in
-            print(event)
             if let _ = keyActions[CGKeyCode(Int(event.keyCode))] {
                submitRequest()
                return nil
             }
-           return event
+            return event
          }
       }
    }

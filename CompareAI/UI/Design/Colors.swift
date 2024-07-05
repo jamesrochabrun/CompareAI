@@ -37,6 +37,10 @@ enum Colors {
   static func codeBlockBorderColor(_ colorScheme: ColorScheme) -> Color {
     colorScheme == .dark ? Color.gray.opacity(0.3) : Color.gray.opacity(0.3)
   }
+   
+   static func multipleContentViewBorderColor(_ colorScheme: ColorScheme) -> Color {
+     colorScheme == .dark ? Color.gray.opacity(0.3) : Color.gray.opacity(0.3)
+   }
 
   static func tintColor() -> Color {
     .black

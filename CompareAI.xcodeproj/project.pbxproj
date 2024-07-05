@@ -16,6 +16,10 @@
 		7B492C752C3515DC00E52A7B /* LLMProviderSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B492C742C3515DC00E52A7B /* LLMProviderSelectionView.swift */; };
 		7B492C792C35241300E52A7B /* ConfigurationScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B492C782C35241300E52A7B /* ConfigurationScreen.swift */; };
 		7B492C7C2C35E65C00E52A7B /* KeyboardMapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B492C7B2C35E65C00E52A7B /* KeyboardMapping.swift */; };
+		7B492CE92C36848F00E52A7B /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = 7B492CE82C36848F00E52A7B /* MarkdownUI */; };
+		7B492CEB2C38705F00E52A7B /* ChatMultipleContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B492CEA2C38705F00E52A7B /* ChatMultipleContentView.swift */; };
+		7B492CEE2C387AAE00E52A7B /* Prompts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B492CED2C387AAE00E52A7B /* Prompts.swift */; };
+		7B492CF02C38A26B00E52A7B /* View+Modifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B492CEF2C38A26B00E52A7B /* View+Modifiers.swift */; };
 		7B4F85CC2C255C44009B40FD /* CompareAIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4F85CB2C255C44009B40FD /* CompareAIApp.swift */; };
 		7B4F85CE2C255C44009B40FD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4F85CD2C255C44009B40FD /* ContentView.swift */; };
 		7B4F85D02C255C45009B40FD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7B4F85CF2C255C45009B40FD /* Assets.xcassets */; };
@@ -24,10 +28,9 @@
 		7B4F85E82C255C45009B40FD /* CompareAIUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4F85E72C255C45009B40FD /* CompareAIUITests.swift */; };
 		7B4F85EA2C255C45009B40FD /* CompareAIUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4F85E92C255C45009B40FD /* CompareAIUITestsLaunchTests.swift */; };
 		7B4F85FB2C255C90009B40FD /* ChatScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4F85FA2C255C90009B40FD /* ChatScreenViewModel.swift */; };
-		7B8AABF22C26A98300944FB5 /* ChatAssistantMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8AABF12C26A98300944FB5 /* ChatAssistantMessageView.swift */; };
+		7B8AABF22C26A98300944FB5 /* ChatSingleContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8AABF12C26A98300944FB5 /* ChatSingleContentView.swift */; };
 		7B8AABF62C26AA3A00944FB5 /* ChatCodeSyntaxHighlighter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8AABF52C26AA3A00944FB5 /* ChatCodeSyntaxHighlighter.swift */; };
 		7B8AABF92C26AA7300944FB5 /* Highlightr in Frameworks */ = {isa = PBXBuildFile; productRef = 7B8AABF82C26AA7300944FB5 /* Highlightr */; };
-		7B8AABFC2C26AAEC00944FB5 /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = 7B8AABFB2C26AAEC00944FB5 /* MarkdownUI */; };
 		7B8AABFE2C26AB7A00944FB5 /* MarkdownUI+Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8AABFD2C26AB7A00944FB5 /* MarkdownUI+Theme.swift */; };
 		7B8AAC002C26ABA100944FB5 /* CopyToClipboardButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8AABFF2C26ABA100944FB5 /* CopyToClipboardButton.swift */; };
 		7B8AAC032C26ABBD00944FB5 /* Sizes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8AAC022C26ABBD00944FB5 /* Sizes.swift */; };
@@ -63,6 +66,9 @@
 		7B492C742C3515DC00E52A7B /* LLMProviderSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLMProviderSelectionView.swift; sourceTree = "<group>"; };
 		7B492C782C35241300E52A7B /* ConfigurationScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationScreen.swift; sourceTree = "<group>"; };
 		7B492C7B2C35E65C00E52A7B /* KeyboardMapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardMapping.swift; sourceTree = "<group>"; };
+		7B492CEA2C38705F00E52A7B /* ChatMultipleContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMultipleContentView.swift; sourceTree = "<group>"; };
+		7B492CED2C387AAE00E52A7B /* Prompts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prompts.swift; sourceTree = "<group>"; };
+		7B492CEF2C38A26B00E52A7B /* View+Modifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Modifiers.swift"; sourceTree = "<group>"; };
 		7B4F85C82C255C44009B40FD /* CompareAI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CompareAI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B4F85CB2C255C44009B40FD /* CompareAIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompareAIApp.swift; sourceTree = "<group>"; };
 		7B4F85CD2C255C44009B40FD /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -75,7 +81,7 @@
 		7B4F85E72C255C45009B40FD /* CompareAIUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompareAIUITests.swift; sourceTree = "<group>"; };
 		7B4F85E92C255C45009B40FD /* CompareAIUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompareAIUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		7B4F85FA2C255C90009B40FD /* ChatScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatScreenViewModel.swift; sourceTree = "<group>"; };
-		7B8AABF12C26A98300944FB5 /* ChatAssistantMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatAssistantMessageView.swift; sourceTree = "<group>"; };
+		7B8AABF12C26A98300944FB5 /* ChatSingleContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSingleContentView.swift; sourceTree = "<group>"; };
 		7B8AABF52C26AA3A00944FB5 /* ChatCodeSyntaxHighlighter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatCodeSyntaxHighlighter.swift; sourceTree = "<group>"; };
 		7B8AABFD2C26AB7A00944FB5 /* MarkdownUI+Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MarkdownUI+Theme.swift"; sourceTree = "<group>"; };
 		7B8AABFF2C26ABA100944FB5 /* CopyToClipboardButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyToClipboardButton.swift; sourceTree = "<group>"; };
@@ -91,7 +97,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7B8AABFC2C26AAEC00944FB5 /* MarkdownUI in Frameworks */,
+				7B492CE92C36848F00E52A7B /* MarkdownUI in Frameworks */,
 				7B8AABF92C26AA7300944FB5 /* Highlightr in Frameworks */,
 				7B492C2B2C311FC200E52A7B /* PolyAI in Frameworks */,
 			);
@@ -120,6 +126,14 @@
 				7B492C7B2C35E65C00E52A7B /* KeyboardMapping.swift */,
 			);
 			path = Keyboard;
+			sourceTree = "<group>";
+		};
+		7B492CEC2C387AA600E52A7B /* Prompts */ = {
+			isa = PBXGroup;
+			children = (
+				7B492CED2C387AAE00E52A7B /* Prompts.swift */,
+			);
+			path = Prompts;
 			sourceTree = "<group>";
 		};
 		7B4F85BF2C255C44009B40FD = {
@@ -196,6 +210,7 @@
 		7B8AABF02C26A97600944FB5 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				7B492CEC2C387AA600E52A7B /* Prompts */,
 				7B492C7A2C35E64900E52A7B /* Keyboard */,
 				7B8AAC0B2C27E37000944FB5 /* Components */,
 				7B8AAC082C27E35400944FB5 /* Screens */,
@@ -227,6 +242,7 @@
 				7B8AAC022C26ABBD00944FB5 /* Sizes.swift */,
 				7B8AAC042C26ABEF00944FB5 /* Colors.swift */,
 				7B492C682C326CC300E52A7B /* VisualEffectView.swift */,
+				7B492CEF2C38A26B00E52A7B /* View+Modifiers.swift */,
 			);
 			path = Design;
 			sourceTree = "<group>";
@@ -243,12 +259,13 @@
 		7B8AAC0B2C27E37000944FB5 /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				7B8AABF12C26A98300944FB5 /* ChatAssistantMessageView.swift */,
+				7B8AABF12C26A98300944FB5 /* ChatSingleContentView.swift */,
 				7B8AAC162C28020E00944FB5 /* ChatScrollView.swift */,
 				7B492C6A2C33CB6600E52A7B /* ChatUserMessageView.swift */,
 				7B8AABFF2C26ABA100944FB5 /* CopyToClipboardButton.swift */,
 				7B8AAC062C26AE8500944FB5 /* CustomTextInput.swift */,
 				7B492C742C3515DC00E52A7B /* LLMProviderSelectionView.swift */,
+				7B492CEA2C38705F00E52A7B /* ChatMultipleContentView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -271,8 +288,8 @@
 			name = CompareAI;
 			packageProductDependencies = (
 				7B8AABF82C26AA7300944FB5 /* Highlightr */,
-				7B8AABFB2C26AAEC00944FB5 /* MarkdownUI */,
 				7B492C2A2C311FC200E52A7B /* PolyAI */,
+				7B492CE82C36848F00E52A7B /* MarkdownUI */,
 			);
 			productName = CompareAI;
 			productReference = 7B4F85C82C255C44009B40FD /* CompareAI.app */;
@@ -349,7 +366,7 @@
 			packageReferences = (
 				7B4F85F62C255C75009B40FD /* XCRemoteSwiftPackageReference "PolyAI" */,
 				7B8AABF42C26AA1400944FB5 /* XCRemoteSwiftPackageReference "Highlightr" */,
-				7B8AABFA2C26AADD00944FB5 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
+				7B492CE72C36848F00E52A7B /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
 			);
 			productRefGroup = 7B4F85C92C255C44009B40FD /* Products */;
 			projectDirPath = "";
@@ -397,10 +414,13 @@
 				7B492C7C2C35E65C00E52A7B /* KeyboardMapping.swift in Sources */,
 				7B8AAC052C26ABEF00944FB5 /* Colors.swift in Sources */,
 				7B8AABFE2C26AB7A00944FB5 /* MarkdownUI+Theme.swift in Sources */,
+				7B492CEB2C38705F00E52A7B /* ChatMultipleContentView.swift in Sources */,
 				7B492C6B2C33CB6600E52A7B /* ChatUserMessageView.swift in Sources */,
 				7B492C712C33D20600E52A7B /* LLMMultiProvidersContent.swift in Sources */,
+				7B492CF02C38A26B00E52A7B /* View+Modifiers.swift in Sources */,
 				7B4F85FB2C255C90009B40FD /* ChatScreenViewModel.swift in Sources */,
 				7B8AAC002C26ABA100944FB5 /* CopyToClipboardButton.swift in Sources */,
+				7B492CEE2C387AAE00E52A7B /* Prompts.swift in Sources */,
 				7B8AAC032C26ABBD00944FB5 /* Sizes.swift in Sources */,
 				7B8AAC172C28020E00944FB5 /* ChatScrollView.swift in Sources */,
 				7B8AAC072C26AE8500944FB5 /* CustomTextInput.swift in Sources */,
@@ -412,7 +432,7 @@
 				7B492C752C3515DC00E52A7B /* LLMProviderSelectionView.swift in Sources */,
 				7B4F85CC2C255C44009B40FD /* CompareAIApp.swift in Sources */,
 				7B492C6F2C33D16300E52A7B /* LLMProviderContent.swift in Sources */,
-				7B8AABF22C26A98300944FB5 /* ChatAssistantMessageView.swift in Sources */,
+				7B8AABF22C26A98300944FB5 /* ChatSingleContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -739,6 +759,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		7B492CE72C36848F00E52A7B /* XCRemoteSwiftPackageReference "swift-markdown-ui" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/gonzalezreal/swift-markdown-ui";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.3.1;
+			};
+		};
 		7B4F85F62C255C75009B40FD /* XCRemoteSwiftPackageReference "PolyAI" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/jamesrochabrun/PolyAI";
@@ -755,14 +783,6 @@
 				minimumVersion = 2.2.0;
 			};
 		};
-		7B8AABFA2C26AADD00944FB5 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/gonzalezreal/swift-markdown-ui";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.3.1;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -771,15 +791,15 @@
 			package = 7B4F85F62C255C75009B40FD /* XCRemoteSwiftPackageReference "PolyAI" */;
 			productName = PolyAI;
 		};
+		7B492CE82C36848F00E52A7B /* MarkdownUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7B492CE72C36848F00E52A7B /* XCRemoteSwiftPackageReference "swift-markdown-ui" */;
+			productName = MarkdownUI;
+		};
 		7B8AABF82C26AA7300944FB5 /* Highlightr */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 7B8AABF42C26AA1400944FB5 /* XCRemoteSwiftPackageReference "Highlightr" */;
 			productName = Highlightr;
-		};
-		7B8AABFB2C26AAEC00944FB5 /* MarkdownUI */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 7B8AABFA2C26AADD00944FB5 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */;
-			productName = MarkdownUI;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
