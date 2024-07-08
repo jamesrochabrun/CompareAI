@@ -32,8 +32,8 @@ struct ChatSingleContentView: View {
       }
       .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
       .frame(maxHeight: isExpanded ? nil : style.maxHeight, alignment: .top)
-      .background(.ultraThinMaterial)
       .padding(.top, style.showProviderAsHeader ? 0 : 16)
+      .background(.ultraThinMaterial)
       .card(border: Colors.codeBlockBorderColor(colorScheme), cornerRadius: 10)
       .padding(.horizontal, style.horizontalPadding ?? 0)
    }
@@ -47,11 +47,11 @@ struct ChatSingleContentView: View {
       }
       .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
       .frame(maxHeight: isExpanded ? nil : style.maxHeight, alignment: .top)
-      .background(.ultraThinMaterial)
       .padding(.top, style.showProviderAsHeader ? 0 : 16)
+      .background(.ultraThinMaterial)
       .card(border: Colors.codeBlockBorderColor(colorScheme), cornerRadius: 10)
       .padding(.horizontal, style.horizontalPadding ?? 0)
-      //  .id(providerContent.id) // Not needed in theory as this is not part of a scrolview here
+      .id(providerContent.id) // Not needed in theory as this is not part of a scrolview here
    }
    
    var body: some View {
@@ -70,6 +70,7 @@ struct ChatSingleContentView: View {
          .markdownCodeSyntaxHighlighter(codeSyntaxHighlighter)
          .padding(.horizontal)
          .padding(.bottom)
+         .frame(maxWidth: .infinity, alignment: .leading)
    }
    
    private var header: some View {
