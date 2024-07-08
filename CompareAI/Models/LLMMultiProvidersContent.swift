@@ -23,10 +23,8 @@ struct LLMMultiProvidersContent: Identifiable {
       var text = ""
       for providerContent in content {
          text += """
-         
          Provider: \(providerContent.provider.displayName)
-         Response: \(providerContent.response)
-         
+         Response: \(providerContent.response) \n
          """
       }
       return text

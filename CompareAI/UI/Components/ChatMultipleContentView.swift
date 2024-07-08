@@ -60,7 +60,7 @@ struct ChatMultipleContentView: View {
             analyze(multipleContent)
          } label: {
             HStack(spacing: 0) {
-               Text("Compare Using Sonnet 3.5")
+               Text("Compare Answers Using Sonnet 3.5")
             }
             .padding(.vertical, 6)
             .padding(.horizontal, 8)

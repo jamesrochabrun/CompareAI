@@ -137,7 +137,7 @@ final class ChatScreenViewModel {
       with parameter: LLMParameter)
       async throws
    {
-      messages.append(ChatMessageViewModel(message: .analyze(response: .init(provider: parameter.provider, response: "Analyzing...."))))
+      messages.append(ChatMessageViewModel(message: .analyze(response: .init(provider: parameter.provider, response: ""))))
       let currentIndex = messages.count - 1
       try await handleParameter(parameter, at: currentIndex)
    }

@@ -16,28 +16,19 @@ struct ChatSingleContentView: View {
    let style: ChatSingleContentViewStyle
    let isScrollEnabled: Bool
    
-   var body: some View {
-      if isScrollEnabled {
-         ScrollView {
-            content
-         }
-      } else {
-         content
-      }
-   }
-   
-   private var content: some View {
-      VStack(alignment: .leading, spacing: 24) {
+   var scrollViewContent: some View {
+      VStack(spacing: style.showProviderAsHeader ? 24 : 0) {
          if style.showProviderAsHeader {
             header
          }
-         Markdown(providerContent.response)
-            .fixedSize(horizontal: false, vertical: true)
-            .textSelection(.enabled)
-            .markdownTheme(.custom(fontSize: 14, colorScheme: colorScheme))
-            .markdownCodeSyntaxHighlighter(codeSyntaxHighlighter)
-            .padding(.horizontal)
-            .padding(.bottom)
+         ScrollViewReader { proxy in
+            ScrollView {
+               markDownContent
+                  .id(providerContent.id)
+            }.onChange(of: providerContent.response) { _, newValue in
+               proxy.scrollTo(providerContent.id, anchor: .bottom)
+            }
+         }
       }
       .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
       .frame(maxHeight: isExpanded ? nil : style.maxHeight, alignment: .top)
@@ -45,6 +36,40 @@ struct ChatSingleContentView: View {
       .padding(.top, style.showProviderAsHeader ? 0 : 16)
       .card(border: Colors.codeBlockBorderColor(colorScheme), cornerRadius: 10)
       .padding(.horizontal, style.horizontalPadding ?? 0)
+   }
+   
+   var nonScrollableContent: some View {
+      VStack(alignment: .leading, spacing: style.showProviderAsHeader ? 24 : 0) {
+         if style.showProviderAsHeader {
+            header
+         }
+         markDownContent
+      }
+      .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+      .frame(maxHeight: isExpanded ? nil : style.maxHeight, alignment: .top)
+      .background(.ultraThinMaterial)
+      .padding(.top, style.showProviderAsHeader ? 0 : 16)
+      .card(border: Colors.codeBlockBorderColor(colorScheme), cornerRadius: 10)
+      .padding(.horizontal, style.horizontalPadding ?? 0)
+      //  .id(providerContent.id) // Not needed in theory as this is not part of a scrolview here
+   }
+   
+   var body: some View {
+      if isScrollEnabled {
+         scrollViewContent
+      } else {
+         nonScrollableContent
+      }
+   }
+   
+   private var markDownContent: some View {
+      Markdown(providerContent.response)
+         .fixedSize(horizontal: false, vertical: true)
+         .textSelection(.enabled)
+         .markdownTheme(.custom(fontSize: 14, colorScheme: colorScheme))
+         .markdownCodeSyntaxHighlighter(codeSyntaxHighlighter)
+         .padding(.horizontal)
+         .padding(.bottom)
    }
    
    private var header: some View {
@@ -80,7 +105,7 @@ struct ChatSingleContentView: View {
 
 struct ChatSingleContentViewStyle {
    
-   var horizontalPadding: CGFloat? = 24.0
+   var horizontalPadding: CGFloat? = 16.0
    var showProviderAsHeader: Bool = true
    var providerHeaderAlignment: Alignment = .leading
    var showExpansionButton: Bool = false
@@ -114,6 +139,7 @@ extension ChatSingleContentViewStyle {
    static var analyzing: Self {
       var style = asPartOfMultipleContentHorizontal
       style.showProviderAsHeader = false
+      style.horizontalPadding = 16.0
       return style
    }
 }
@@ -146,8 +172,8 @@ extension ChatSingleContentViewStyle {
    ChatSingleContentView(
       providerContent: LLMProviderContent(provider: .openAI, response: response),
       style: .analyzing,
-      isScrollEnabled: true)
-   .frame(height: 500)
+      isScrollEnabled: false)
+   .frame(height: 1000)
 }
 
 
