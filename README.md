@@ -1,4 +1,7 @@
 # CompareAI
+
+Video demo here! https://x.com/jamesrochabrun/status/1811121428265324917
+
 A mac os app that uses [PolyAI](https://github.com/jamesrochabrun/PolyAI) to access multiple LLM providers.
 It uses Claude from Anthropic to orchestrate tasks for different LLMs (Large Language Models). Claude 3.5 Sonnet is responsible for taking user input and creating tasks that will be assigned to corresponding models based on the models' capabilities and task complexity. Later, it will be able to combine all the outputs to produce a final, more comprehensive answer.
 
