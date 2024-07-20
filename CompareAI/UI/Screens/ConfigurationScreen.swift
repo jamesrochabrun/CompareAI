@@ -25,6 +25,13 @@ struct ConfigurationScreen: View {
                addConfig: { llmConfiguration, provider in
                   llmConfigurations.append(llmConfiguration)
                   availableProviders.append(provider)
+               }, removeConfig: { llmConfiguration, provider in
+                  if let index = llmConfigurations.firstIndex(of: llmConfiguration) {
+                     llmConfigurations.remove(at: index)
+                  }
+                  if let providerIndex = availableProviders.firstIndex(of: provider) {
+                     availableProviders.remove(at: providerIndex)
+                  }
                })
          }
          Spacer()
@@ -39,6 +46,8 @@ struct LLMConfigurationView: View {
    
    let provider: LLMProvider
    let addConfig: (LLMConfiguration, LLMProvider) -> Void
+   let removeConfig: (LLMConfiguration, LLMProvider) -> Void
+
    @State private var apiKey: String = ""
    @State private var configurationAdded = false
    
@@ -47,8 +56,14 @@ struct LLMConfigurationView: View {
          HStack {
             TextField(provider.apiKeyInputText, text: $apiKey)
             Button {
-               addConfig(provider.configuration(apiKey), provider)
-               configurationAdded = true
+               if configurationAdded {
+                  removeConfig(provider.configuration(apiKey), provider)
+                  configurationAdded = false
+               } else {
+                  addConfig(provider.configuration(apiKey), provider)
+                  configurationAdded = true
+               }
+       
             } label: {
                Image(systemName: configurationAdded ? "minus" : "plus")
             }

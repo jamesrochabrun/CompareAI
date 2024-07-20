@@ -95,10 +95,10 @@ extension LLMProvider: Identifiable, CaseIterable {
    
    func configuration(_ value: String) -> LLMConfiguration {
       switch self {
-      case .openAI: return .openAI(.api(key: ""))
-      case .anthropic: return .anthropic(apiKey: "")
-      case .gemini: return .gemini(apiKey: "")
-      case .llama3: return .ollama(url: "http://localhost:11434")
+      case .openAI: return .openAI(.api(key: value))
+      case .anthropic: return .anthropic(apiKey: value)
+      case .gemini: return .gemini(apiKey: value)
+      case .llama3: return .ollama(url: value)
       }
    }
 }
