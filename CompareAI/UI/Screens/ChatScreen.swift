@@ -51,38 +51,48 @@ struct ChatScreen: View {
    @Environment(\.horizontalSizeClass) private var sizeClass
    
    private var chat: some View {
-      GeometryReader { proxy in
-         ScrollView {
-            ForEach(viewModel.messages) { message in
-               switch message.message {
-               case .analyze(let content):
-                  ChatSingleContentView(
-                     providerContent: content,
-                     style: .analyzing,
-                     isScrollEnabled: false)
-               case .user(let prompt):
-                  ChatUserMessageView(text: prompt)
-               case .assistant(let multipleContent):
-                  if let firstContent = multipleContent.content.first, multipleContent.content.count == 1 {
-                     ChatSingleContentView(
-                        providerContent: firstContent,
-                        style: .defaultStyle,
-                        isScrollEnabled: false)
-                  } else {
-                     // horizontal: proxy.size.width > 1000
-                     ChatMultipleContentView(
-                        multipleContent: multipleContent,
-                        layout: proxy.size.width > 1000 ? .horizontal : .vertical,
-                        isChildrenScrollingEnabled: true,
-                        analyze: { multipleContent in
-                           Task {
-                              try await viewModel.analyze(multipleContent: multipleContent, with: .anthropic)
-                           }
-                        })
-                     // We only want to apply a max width for horizontal layout.
-                     .frame(maxHeight: proxy.size.width > 1000 ? 500 : nil)
-                  }
-               }
+      GeometryReader { outsideProxy in
+         ScrollViewReader { proxy in
+            List {
+               mainContent(proxy: outsideProxy)
+            }
+            .listStyle(.plain)
+            .listRowBackground(Color.clear)
+            .scrollContentBackground(.hidden) // This removes the scroll view background
+         }
+      }
+   }
+   
+   @ViewBuilder
+   private func mainContent(proxy: GeometryProxy) -> some View {
+      ForEach(viewModel.messages) { message in
+         switch message.message {
+         case .analyze(let content):
+            ChatSingleContentView(
+               providerContent: content,
+               style: .analyzing,
+               isScrollEnabled: false)
+         case .user(let prompt):
+            ChatUserMessageView(text: prompt)
+         case .assistant(let multipleContent):
+            if let firstContent = multipleContent.content.first, multipleContent.content.count == 1 {
+               ChatSingleContentView(
+                  providerContent: firstContent,
+                  style: .defaultStyle,
+                  isScrollEnabled: false)
+            } else {
+               // horizontal: proxy.size.width > 1000
+               ChatMultipleContentView(
+                  multipleContent: multipleContent,
+                  layout: proxy.size.width > 1000 ? .horizontal : .vertical,
+                  isChildrenScrollingEnabled: true,
+                  analyze: { multipleContent in
+                     Task {
+                        try await viewModel.analyze(multipleContent: multipleContent, with: .anthropic)
+                     }
+                  })
+               // We only want to apply a max width for horizontal layout.
+               .frame(maxHeight: proxy.size.width > 1000 ? 500 : nil)
             }
          }
       }

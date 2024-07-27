@@ -16,9 +16,8 @@ final class ChatScreenViewModel {
    init(service: PolyAIService) {
       self.service = service
    }
-      
-   var messages: [ChatMessageViewModel] = []
    
+   var messages: [ChatMessageViewModel] = []
    var availableProviders: [LLMProvider] = []
       
    func udpateConfigurations(_ configurations: [LLMConfiguration]) {
