@@ -89,16 +89,16 @@ extension LLMProvider: Identifiable, CaseIterable {
       case .openAI: return .openAI(model: .gpt4o, messages: messages, maxTokens: maxTokens)
       case .anthropic: return .anthropic(model: .claude35Sonnet, messages: messages, maxTokens: maxTokens)
       case .gemini: return .gemini(model: "gemini-1.5-pro-001", messages: messages, maxTokens: maxTokens)
-      case .llama3: return .ollama(model: "llama3", messages: messages, maxTokens: maxTokens)
+      case .llama3: return .ollama(model: "llama3.1", messages: messages, maxTokens: maxTokens)
       }
    }
    
    func configuration(_ value: String) -> LLMConfiguration {
       switch self {
-      case .openAI: return .openAI(.api(key: ""))
-      case .anthropic: return .anthropic(apiKey: "")
-      case .gemini: return .gemini(apiKey: "")
-      case .llama3: return .ollama(url: "http://localhost:11434")
+      case .openAI: return .openAI(.api(key: value))
+      case .anthropic: return .anthropic(apiKey: value)
+      case .gemini: return .gemini(apiKey: value)
+      case .llama3: return .ollama(url: value)
       }
    }
 }
