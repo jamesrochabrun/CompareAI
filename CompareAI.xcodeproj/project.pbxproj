@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7B492C2B2C311FC200E52A7B /* PolyAI in Frameworks */ = {isa = PBXBuildFile; productRef = 7B492C2A2C311FC200E52A7B /* PolyAI */; };
 		7B492C692C326CC300E52A7B /* VisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B492C682C326CC300E52A7B /* VisualEffectView.swift */; };
 		7B492C6B2C33CB6600E52A7B /* ChatUserMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B492C6A2C33CB6600E52A7B /* ChatUserMessageView.swift */; };
 		7B492C6D2C33D11300E52A7B /* ChatMessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B492C6C2C33D11300E52A7B /* ChatMessageViewModel.swift */; };
@@ -21,7 +20,7 @@
 		7B492CEE2C387AAE00E52A7B /* Prompts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B492CED2C387AAE00E52A7B /* Prompts.swift */; };
 		7B492CF02C38A26B00E52A7B /* View+Modifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B492CEF2C38A26B00E52A7B /* View+Modifiers.swift */; };
 		7B4F85CC2C255C44009B40FD /* CompareAIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4F85CB2C255C44009B40FD /* CompareAIApp.swift */; };
-		7B4F85CE2C255C44009B40FD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4F85CD2C255C44009B40FD /* ContentView.swift */; };
+		7B4F85CE2C255C44009B40FD /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4F85CD2C255C44009B40FD /* RootView.swift */; };
 		7B4F85D02C255C45009B40FD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7B4F85CF2C255C45009B40FD /* Assets.xcassets */; };
 		7B4F85D32C255C45009B40FD /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7B4F85D22C255C45009B40FD /* Preview Assets.xcassets */; };
 		7B4F85DE2C255C45009B40FD /* CompareAITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4F85DD2C255C45009B40FD /* CompareAITests.swift */; };
@@ -38,6 +37,7 @@
 		7B8AAC072C26AE8500944FB5 /* CustomTextInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8AAC062C26AE8500944FB5 /* CustomTextInput.swift */; };
 		7B8AAC0A2C27E35E00944FB5 /* ChatScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8AAC092C27E35E00944FB5 /* ChatScreen.swift */; };
 		7B8AAC172C28020E00944FB5 /* ChatScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8AAC162C28020E00944FB5 /* ChatScrollView.swift */; };
+		7BCD79042D213EFF003C5555 /* PolyAI in Frameworks */ = {isa = PBXBuildFile; productRef = 7BCD79032D213EFF003C5555 /* PolyAI */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,7 +71,7 @@
 		7B492CEF2C38A26B00E52A7B /* View+Modifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Modifiers.swift"; sourceTree = "<group>"; };
 		7B4F85C82C255C44009B40FD /* CompareAI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CompareAI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B4F85CB2C255C44009B40FD /* CompareAIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompareAIApp.swift; sourceTree = "<group>"; };
-		7B4F85CD2C255C44009B40FD /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		7B4F85CD2C255C44009B40FD /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		7B4F85CF2C255C45009B40FD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7B4F85D22C255C45009B40FD /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		7B4F85D42C255C45009B40FD /* CompareAI.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CompareAI.entitlements; sourceTree = "<group>"; };
@@ -99,7 +99,7 @@
 			files = (
 				7B492CE92C36848F00E52A7B /* MarkdownUI in Frameworks */,
 				7B8AABF92C26AA7300944FB5 /* Highlightr in Frameworks */,
-				7B492C2B2C311FC200E52A7B /* PolyAI in Frameworks */,
+				7BCD79042D213EFF003C5555 /* PolyAI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -163,7 +163,7 @@
 				7B8AABF02C26A97600944FB5 /* UI */,
 				7B4F85F92C255C83009B40FD /* Models */,
 				7B4F85CB2C255C44009B40FD /* CompareAIApp.swift */,
-				7B4F85CD2C255C44009B40FD /* ContentView.swift */,
+				7B4F85CD2C255C44009B40FD /* RootView.swift */,
 				7B4F85CF2C255C45009B40FD /* Assets.xcassets */,
 				7B4F85D42C255C45009B40FD /* CompareAI.entitlements */,
 				7B4F85D12C255C45009B40FD /* Preview Content */,
@@ -288,8 +288,8 @@
 			name = CompareAI;
 			packageProductDependencies = (
 				7B8AABF82C26AA7300944FB5 /* Highlightr */,
-				7B492C2A2C311FC200E52A7B /* PolyAI */,
 				7B492CE82C36848F00E52A7B /* MarkdownUI */,
+				7BCD79032D213EFF003C5555 /* PolyAI */,
 			);
 			productName = CompareAI;
 			productReference = 7B4F85C82C255C44009B40FD /* CompareAI.app */;
@@ -339,7 +339,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1500;
-				LastUpgradeCheck = 1500;
+				LastUpgradeCheck = 1600;
 				TargetAttributes = {
 					7B4F85C72C255C44009B40FD = {
 						CreatedOnToolsVersion = 15.0;
@@ -364,9 +364,9 @@
 			);
 			mainGroup = 7B4F85BF2C255C44009B40FD;
 			packageReferences = (
-				7B4F85F62C255C75009B40FD /* XCRemoteSwiftPackageReference "PolyAI" */,
 				7B8AABF42C26AA1400944FB5 /* XCRemoteSwiftPackageReference "Highlightr" */,
 				7B492CE72C36848F00E52A7B /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
+				7BCD79022D213E9A003C5555 /* XCRemoteSwiftPackageReference "PolyAI" */,
 			);
 			productRefGroup = 7B4F85C92C255C44009B40FD /* Products */;
 			projectDirPath = "";
@@ -426,7 +426,7 @@
 				7B8AAC072C26AE8500944FB5 /* CustomTextInput.swift in Sources */,
 				7B492C792C35241300E52A7B /* ConfigurationScreen.swift in Sources */,
 				7B492C6D2C33D11300E52A7B /* ChatMessageViewModel.swift in Sources */,
-				7B4F85CE2C255C44009B40FD /* ContentView.swift in Sources */,
+				7B4F85CE2C255C44009B40FD /* RootView.swift in Sources */,
 				7B8AAC0A2C27E35E00944FB5 /* ChatScreen.swift in Sources */,
 				7B492C692C326CC300E52A7B /* VisualEffectView.swift in Sources */,
 				7B492C752C3515DC00E52A7B /* LLMProviderSelectionView.swift in Sources */,
@@ -503,6 +503,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -566,6 +567,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -596,6 +598,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"CompareAI/Preview Content\"";
 				DEVELOPMENT_TEAM = CQ45U4X9K3;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -606,11 +609,11 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = jamesRochabrun.CompareAI;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx14.0;
+				SDKROOT = macosx;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 			};
@@ -625,6 +628,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"CompareAI/Preview Content\"";
 				DEVELOPMENT_TEAM = CQ45U4X9K3;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -635,11 +639,11 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = jamesRochabrun.CompareAI;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx14.0;
+				SDKROOT = macosx;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 			};
@@ -648,10 +652,10 @@
 		7B4F85F12C255C45009B40FD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = CQ45U4X9K3;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
@@ -667,10 +671,10 @@
 		7B4F85F22C255C45009B40FD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = CQ45U4X9K3;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
@@ -686,9 +690,9 @@
 		7B4F85F42C255C45009B40FD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = CQ45U4X9K3;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
@@ -703,9 +707,9 @@
 		7B4F85F52C255C45009B40FD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = CQ45U4X9K3;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
@@ -767,14 +771,6 @@
 				minimumVersion = 2.3.1;
 			};
 		};
-		7B4F85F62C255C75009B40FD /* XCRemoteSwiftPackageReference "PolyAI" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/jamesrochabrun/PolyAI";
-			requirement = {
-				branch = main;
-				kind = branch;
-			};
-		};
 		7B8AABF42C26AA1400944FB5 /* XCRemoteSwiftPackageReference "Highlightr" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/raspu/Highlightr";
@@ -783,14 +779,17 @@
 				minimumVersion = 2.2.0;
 			};
 		};
+		7BCD79022D213E9A003C5555 /* XCRemoteSwiftPackageReference "PolyAI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/jamesrochabrun/PolyAI";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		7B492C2A2C311FC200E52A7B /* PolyAI */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 7B4F85F62C255C75009B40FD /* XCRemoteSwiftPackageReference "PolyAI" */;
-			productName = PolyAI;
-		};
 		7B492CE82C36848F00E52A7B /* MarkdownUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 7B492CE72C36848F00E52A7B /* XCRemoteSwiftPackageReference "swift-markdown-ui" */;
@@ -800,6 +799,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 7B8AABF42C26AA1400944FB5 /* XCRemoteSwiftPackageReference "Highlightr" */;
 			productName = Highlightr;
+		};
+		7BCD79032D213EFF003C5555 /* PolyAI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7BCD79022D213E9A003C5555 /* XCRemoteSwiftPackageReference "PolyAI" */;
+			productName = PolyAI;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

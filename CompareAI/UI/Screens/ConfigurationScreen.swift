@@ -82,13 +82,13 @@ struct LLMConfigurationView: View {
 
 // MARK: LLMConfiguration+Equatable
 
-extension LLMConfiguration: Equatable {
+extension LLMConfiguration: @retroactive Equatable {
    public static func == (lhs: LLMConfiguration, rhs: LLMConfiguration) -> Bool {
       switch (lhs, rhs) {
       case (.openAI(let lhsOpenAI), .openAI(let rhsOpenAI)):
          return lhsOpenAI == rhsOpenAI
-      case (.anthropic(let lhsApiKey, let lhsConfig), .anthropic(let rhsApiKey, let rhsConfig)):
-         return lhsApiKey == rhsApiKey && lhsConfig == rhsConfig
+      case (.anthropic(let lhsApiKey, let lhsConfig, let lhsBetaHeaders), .anthropic(let rhsApiKey, let rhsConfig, let rhsBetaHeaders)):
+         return lhsApiKey == rhsApiKey && lhsConfig == rhsConfig && lhsBetaHeaders == rhsBetaHeaders
       case (.gemini(let lhsApiKey), .gemini(let rhsApiKey)):
          return lhsApiKey == rhsApiKey
       case (.ollama(let lhsUrl), .ollama(let rhsUrl)):
@@ -99,7 +99,7 @@ extension LLMConfiguration: Equatable {
    }
 }
 
-extension LLMConfiguration.OpenAI: Equatable {
+extension LLMConfiguration.OpenAI: @retroactive Equatable {
    public static func == (lhs: LLMConfiguration.OpenAI, rhs: LLMConfiguration.OpenAI) -> Bool {
       switch (lhs, rhs) {
       case (.api(let lhsKey, let lhsOrgID, let lhsConfig, _),
@@ -116,7 +116,7 @@ extension LLMConfiguration.OpenAI: Equatable {
    }
 }
 
-extension AzureOpenAIConfiguration: Equatable {
+extension AzureOpenAIConfiguration: @retroactive Equatable {
    public static func == (lhs: SwiftOpenAI.AzureOpenAIConfiguration, rhs: SwiftOpenAI.AzureOpenAIConfiguration) -> Bool {
       false // TODO: When Azure is supported.
    }

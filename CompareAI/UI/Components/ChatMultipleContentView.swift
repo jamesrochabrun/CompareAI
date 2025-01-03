@@ -38,7 +38,7 @@ struct ChatMultipleContentView: View {
       VStack(alignment: .leading) {
          Text("Providers:")
             .font(.headline)
-         internalLayout{
+         internalLayout {
             ForEach(multipleContent.content) { content in
                ChatSingleContentView(
                   providerContent: content,

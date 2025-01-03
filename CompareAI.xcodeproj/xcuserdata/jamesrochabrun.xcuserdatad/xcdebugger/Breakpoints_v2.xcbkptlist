@@ -3,4 +3,22 @@
    uuid = "36914546-801D-4384-942A-22B80538BDE4"
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "32F6CE2B-51F5-4B75-B8DD-4209BA4DD14E"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../Library/Developer/Xcode/DerivedData/CompareAI-avzbvnagmmnodahajtcrfkeqnoad/SourcePackages/checkouts/PolyAI/Sources/PolyAI/Service/DefaultPolyAIService.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "125"
+            endingLineNumber = "125"
+            landmarkName = "DefaultPolyAIService"
+            landmarkType = "14">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

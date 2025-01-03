@@ -1,14 +1,6 @@
 {
+  "originHash" : "ab184c9c05fcdf9e582eeef00ac8447acdf1c9de25071d06f01d542c0f303392",
   "pins" : [
-    {
-      "identity" : "generative-ai-swift",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/google/generative-ai-swift",
-      "state" : {
-        "branch" : "main",
-        "revision" : "54784005b57c2235a7669e0c12e8dafa68f0ca5f"
-      }
-    },
     {
       "identity" : "highlightr",
       "kind" : "remoteSourceControl",
@@ -33,7 +25,16 @@
       "location" : "https://github.com/jamesrochabrun/PolyAI",
       "state" : {
         "branch" : "main",
-        "revision" : "5d226c94a7b4a990d797fd9aaa08466d97f0edd5"
+        "revision" : "9d199fd1c477c2b4d4eb32f4579f0f1682a9ac1c"
+      }
+    },
+    {
+      "identity" : "swift-cmark",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/swiftlang/swift-cmark",
+      "state" : {
+        "revision" : "3ccff77b2dc5b96b77db3da0d68d28068593fa53",
+        "version" : "0.5.0"
       }
     },
     {
@@ -41,8 +42,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/gonzalezreal/swift-markdown-ui",
       "state" : {
-        "revision" : "9a8119b37e09a770367eeb26e05267c75d854053",
-        "version" : "2.3.1"
+        "revision" : "5f613358148239d0292c0cef674a3c2314737f9e",
+        "version" : "2.4.1"
       }
     },
     {
@@ -51,7 +52,7 @@
       "location" : "https://github.com/jamesrochabrun/SwiftAnthropic",
       "state" : {
         "branch" : "main",
-        "revision" : "7fecba04ab44cf2acacc239f4198facf1b072df3"
+        "revision" : "7262ced65e890ea5311193b849786344432d8fa7"
       }
     },
     {
@@ -60,9 +61,9 @@
       "location" : "https://github.com/jamesrochabrun/SwiftOpenAI",
       "state" : {
         "branch" : "main",
-        "revision" : "2544c2f80f807f00297907ab92bfdf0f514b2d48"
+        "revision" : "25c73a4ce4bf05e1d75a3b405e677f8c022488cf"
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }

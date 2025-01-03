@@ -10,10 +10,11 @@ import PolyAI
 import SwiftOpenAI
 
 @MainActor
-struct ContentView: View {
+struct RootView: View {
    
-   @State private var llmConfigurations: [LLMConfiguration] = []
-   @State private var availableProviders: [LLMProvider] = []
+   @State private var llmConfigurations: [LLMConfiguration] = [
+   ]
+   @State private var availableProviders: [LLMProvider] = [.anthropic, .gemini, .llama3, .openAI]
    @State private var chatScreenViewModel: ChatScreenViewModel = .init(service: PolyAIServiceFactory.serviceWith([]))
    
    var body: some View {
@@ -28,10 +29,10 @@ struct ContentView: View {
       .onChange(of: colorScheme, initial: true) { _, newValue in
          codeSyntaxHighlighter.updateTheme(colorScheme: newValue)
       }
-      .onChange(of: llmConfigurations) { _, newValue in
+      .onChange(of: llmConfigurations, initial: true) { _, newValue in
          chatScreenViewModel.udpateConfigurations(newValue)
       }
-      .onChange(of: availableProviders) { _, newValue in
+      .onChange(of: availableProviders, initial: true) { _, newValue in
          chatScreenViewModel.availableProviders = newValue
       }
    }
@@ -43,5 +44,5 @@ struct ContentView: View {
 }
 
 #Preview {
-   ContentView()
+   RootView()
 }

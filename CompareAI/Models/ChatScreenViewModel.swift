@@ -19,7 +19,8 @@ final class ChatScreenViewModel {
    
    var messages: [ChatMessageViewModel] = []
    var availableProviders: [LLMProvider] = []
-      
+   var providersMessageHistoryMap: [LLMProvider.ID: [LLMMessage]] = [:] /// Fill this so we can keep a chat hostory
+   
    func udpateConfigurations(_ configurations: [LLMConfiguration]) {
       service = PolyAIServiceFactory.serviceWith(configurations)
    }
@@ -43,15 +44,28 @@ final class ChatScreenViewModel {
       _ prompt: String,
       selectedProviders: [LLMProvider])
    {
-      let parameters = selectedProviders.map { $0.parameter([.init(role: .user, content: prompt)], maxTokens: 1000) }
+      let userMessage = LLMMessage(role: .user, content: prompt)
+      
+      // Update message history for each selected provider
+      for provider in selectedProviders {
+         if providersMessageHistoryMap[provider.id] == nil {
+            providersMessageHistoryMap[provider.id] = []
+         }
+         providersMessageHistoryMap[provider.id]?.append(userMessage)
+      }
+      
+      let parameters = selectedProviders.map { provider in
+         // Get the message history for this provider
+         let messageHistory = providersMessageHistoryMap[provider.id] ?? []
+         return provider.parameter(messageHistory, maxTokens: 10000)
+      }
+      
       // Add users message to ui
       messages.append(ChatMessageViewModel(message: .user(prompt: prompt)))
       
       Task {
          do {
             try await withThrowingTaskGroup(of: Void.self) { group in
-               // Initialize a new MultipleContent for this set of parameters
-               
                var content: [LLMProviderContent] = []
                for parameter in parameters {
                   switch parameter {
@@ -67,10 +81,7 @@ final class ChatScreenViewModel {
                }
                
                let newMultipleContent = LLMMultiProvidersContent(content: content)
-               
                messages.append(ChatMessageViewModel(message: .assistant(content: newMultipleContent)))
-               
-               // Index of the newly added assistant MultipleContent
                let currentIndex = messages.count - 1
                
                for parameter in parameters {
@@ -86,28 +97,67 @@ final class ChatScreenViewModel {
       }
    }
    
+   func clearHistory(
+      for provider: LLMProvider)
+   {
+      providersMessageHistoryMap[provider.id] = []
+      // Remove messages for this specific provider from the view models array
+      messages = messages.filter { message in
+         switch message.message {
+         case .assistant(let content):
+            return !content.content.contains(where: { $0.provider == provider })
+         case .analyze(let content):
+            return content.provider != provider
+         case .user:
+            // Keep user messages if there are still other providers' messages
+            return messages.contains(where: { otherMessage in
+               if case .assistant(let content) = otherMessage.message {
+                  return content.content.contains(where: { $0.provider != provider })
+               }
+               return false
+            })
+         }
+      }
+   }
+   
+   func clearAllHistory() {
+      providersMessageHistoryMap.removeAll()
+      messages.removeAll()
+   }
+   
    // MARK: Private
    
    private func handleParameter(
-      _ parameter: LLMParameter, at index: Int)
+      _ parameter: LLMParameter,
+      at index: Int)
    async throws
    {
       guard index < messages.count else { return }
       let currentMessage = messages[index]
+      
+      var fullResponse = ""
       for try await chunk in self.streamString(parameter: parameter) {
          switch currentMessage.message {
          case .assistant(let multipleContent):
             if let content = multipleContent.content[parameter.provider] {
                content.response += chunk
+               fullResponse = content.response
                Prompts.printHelper(context: "Gen AI: \(parameter.provider)", content: content.response)
                messages[index] = currentMessage
             }
          case .analyze(let content):
             content.response += chunk
+            fullResponse = content.response
             messages[index] = currentMessage
          default:
             break
          }
+      }
+      
+      // After collecting the full response, update the message history
+      if case .assistant = currentMessage.message {
+         let assistantMessage = LLMMessage(role: .assistant, content: fullResponse)
+         providersMessageHistoryMap[parameter.provider.id]?.append(assistantMessage)
       }
    }
    
@@ -134,7 +184,7 @@ final class ChatScreenViewModel {
    
    private func analyze(
       with parameter: LLMParameter)
-      async throws
+   async throws
    {
       messages.append(ChatMessageViewModel(message: .analyze(response: .init(provider: parameter.provider, response: ""))))
       let currentIndex = messages.count - 1
@@ -143,7 +193,7 @@ final class ChatScreenViewModel {
    
    private func lastMessageOf(
       type: ChatMessageViewModel.Message.MessageType)
-      -> ChatMessageViewModel?
+   -> ChatMessageViewModel?
    {
       messages.last { message in
          message.message.type == type

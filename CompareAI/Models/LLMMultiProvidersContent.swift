@@ -12,7 +12,7 @@ import Foundation
 struct LLMMultiProvidersContent: Identifiable {
    
    let id = UUID()
-
+   
    let content: [LLMProviderContent]
    
    init(content: [LLMProviderContent]) {
